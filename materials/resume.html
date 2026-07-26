@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>孙澍垚 · 简历</title>
+<style>
+  :root {
+    --bg: #FBF9F5;
+    --fg: #1A1A1A;
+    --muted: #6B6B6B;
+    --accent: #C5513B;
+    --hairline: #E8E5DF;
+    --font-sans: system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB", sans-serif;
+    --font-serif: "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", Georgia, serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #f0efeb;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    font-family: var(--font-sans);
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    background: #fff;
+    padding: 22mm 20mm 20mm 20mm;
+    box-shadow: 0 2px 24px rgba(0,0,0,0.08);
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* ── Typography ── */
+  h1 { font-size: 28px; font-weight: 700; letter-spacing: 0.04em; }
+  h2 {
+    font-size: 12px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--accent); margin-bottom: 14px;
+  }
+  h3 {
+    font-size: 15px; font-weight: 600; line-height: 1.5;
+  }
+  p, li { font-size: 13px; line-height: 1.75; color: var(--fg); }
+  .muted { color: var(--muted); font-size: 12px; }
+
+  /* ── Header ── */
+  .header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    padding-bottom: 18px; border-bottom: 1.5px solid var(--fg); margin-bottom: 22px;
+  }
+  .header .tagline { font-size: 14px; color: var(--muted); margin-top: 4px; }
+  .header .contact { text-align: right; font-size: 12px; color: var(--muted); line-height: 1.8; }
+
+  /* ── Stats Row ── */
+  .stats {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    margin-bottom: 26px;
+  }
+  .stat-item {
+    text-align: center; padding: 12px 8px;
+    border: 1px solid var(--hairline); border-radius: 2px;
+  }
+  .stat-item .number { font-size: 28px; font-weight: 700; font-family: var(--font-serif); line-height: 1.2; }
+  .stat-item .label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* ── Section ── */
+  .section { margin-bottom: 22px; }
+
+  /* ── Profile ── */
+  .profile-text { font-size: 13px; line-height: 1.8; color: var(--fg); }
+
+  /* ── Works ── */
+  .works-category { margin-bottom: 16px; }
+  .works-category .cat-label {
+    font-size: 11px; font-weight: 600; color: var(--accent);
+    letter-spacing: 0.08em; margin-bottom: 8px;
+    padding-bottom: 4px; border-bottom: 0.5px solid var(--hairline);
+  }
+  .work-item { margin-bottom: 10px; padding-left: 0; }
+  .work-item .work-meta { font-size: 11px; color: var(--muted); margin-bottom: 1px; }
+  .work-item .work-title { font-size: 13.5px; font-weight: 600; line-height: 1.5; }
+  .work-item .work-insight { font-size: 12px; color: var(--muted); line-height: 1.65; margin-top: 2px; }
+  .work-item .work-tags { font-size: 10px; color: var(--muted); margin-top: 3px; }
+
+  /* ── Experience ── */
+  .exp-item { margin-bottom: 12px; }
+  .exp-item .exp-meta { font-size: 11px; color: var(--muted); margin-bottom: 1px; }
+  .exp-item .exp-role { font-size: 13px; font-weight: 600; }
+  .exp-item .exp-desc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-top: 3px; }
+  .exp-item .exp-detail { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* ── Education ── */
+  .edu-item { margin-bottom: 10px; }
+  .edu-item .edu-meta { font-size: 11px; color: var(--muted); margin-bottom: 1px; }
+  .edu-item .edu-school { font-size: 13px; font-weight: 600; }
+  .edu-item .edu-desc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-top: 2px; }
+
+  /* ── Skills ── */
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px 12px; }
+  .skill-tag { font-size: 12px; color: var(--fg); }
+  .skill-tag::before { content: '·'; color: var(--accent); margin-right: 6px; }
+
+  /* ── Print ── */
+  @media print {
+    body { background: #fff; padding: 0; }
+    .page { box-shadow: none; width: 100%; min-height: auto; padding: 15mm 15mm 12mm 15mm; }
+    @page { size: A4; margin: 0; }
+  }
+
+  @media screen and (max-width: 800px) {
+    .page { width: 100%; padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <h1>孙澍垚 <span style="font-size: 14px; font-weight: 400; color: var(--muted);">sūn shù yáo</span></h1>
+      <div class="tagline">财经写作者 / AI 科技内容创作者</div>
+      <div class="tagline" style="margin-top: 2px;">共识形成前独立判断，在热点面前逆向思考。</div>
+    </div>
+    <div class="contact">
+      杭州<br>
+      17766109660<br>
+      cloudyssy@163.com
+    </div>
+  </div>
+
+  <!-- Writing Stats -->
+  <div class="stats">
+    <div class="stat-item">
+      <div class="number">200+</div>
+      <div class="label">科技短评 · 2020–2025</div>
+    </div>
+    <div class="stat-item">
+      <div class="number">100 万+</div>
+      <div class="label">累计阅读量</div>
+    </div>
+    <div class="stat-item">
+      <div class="number">20 万+</div>
+      <div class="label">视频最高点赞</div>
+    </div>
+  </div>
+
+  <!-- Profile -->
+  <div class="section">
+    <h2>个人简介</h2>
+    <p class="profile-text">
+      五年财经公众号写作经验，累计撰写 200+ 科技短评，覆盖 AI 大模型、芯片、智驾、机器人等前沿方向。两年财经短视频写作经验，参与「李稻葵」账号内容共创，负责期间抖音涨粉近百万。使用 Claude Code + DeepSeek 搭建个人半自动化写作工作流，运营个人账号「42号实验室」。
+    </p>
+  </div>
+
+  <!-- Selected Works -->
+  <div class="section">
+    <h2>代表作品</h2>
+
+    <!-- 视频作品 -->
+    <div class="works-category">
+      <div class="cat-label">视频</div>
+
+      <div class="work-item">
+        <div class="work-meta">「李稻葵」抖音</div>
+        <div class="work-title">持续讨论 AI 是否有泡沫？AI 时代如何分配？</div>
+        <div class="work-insight">保持周更节奏，覆盖宏观经济、民生领域热点议题，以经济学视角切入 AI 话题，兼顾专业深度与大众传播。</div>
+        <div class="work-tags">#财经视频 #AI 话题</div>
+      </div>
+
+      <div class="work-item">
+        <div class="work-meta">「李稻葵」抖音 · 上线后点赞破万后被下架</div>
+        <div class="work-title">《演唱会被紧急叫停，上亿损失谁该反思》</div>
+        <div class="work-insight">从一场演唱会被叫停的事件切入，梳理背后多方利益关联与制度反思，引发广泛讨论。</div>
+        <div class="work-tags">#热点评论 #事件分析</div>
+      </div>
+
+      <div class="work-item">
+        <div class="work-meta">「楠哥有才气」</div>
+        <div class="work-title">《深挖蜜雪冰城发家史》《科技巨头争相砸钱中国高校？》</div>
+        <div class="work-insight">商业分析类视频脚本，将企业成长史与产业趋势结合，以通俗叙事解释复杂商业逻辑。</div>
+        <div class="work-tags">#商业分析 #叙事脚本</div>
+      </div>
+    </div>
+
+    <!-- 文章作品 -->
+    <div class="works-category">
+      <div class="cat-label">文章</div>
+
+      <div class="work-item">
+        <div class="work-meta">吴晓波频道</div>
+        <div class="work-title">交易日科技短评 · 200+ 篇</div>
+        <div class="work-insight">追踪 AI 大模型、芯片半导体、自动驾驶等前沿科技领域当日热点，撰写独立短评。单篇最高阅读量 10 万+。</div>
+        <div class="work-tags">#科技评论 #产业追踪</div>
+      </div>
+
+      <div class="work-item">
+        <div class="work-meta">冰川私享号</div>
+        <div class="work-title">《每月 800 元养老消费券，不该只是躺在账户里》</div>
+        <div class="work-insight">从养老消费券使用困境切入，讨论社会保障政策落地的制度性障碍。</div>
+        <div class="work-tags">#社会保障 #政策评论</div>
+      </div>
+
+      <div class="work-item">
+        <div class="work-meta">江苏金融观察</div>
+        <div class="work-title">《"逆天"12 连板后，国联证券还会涨吗？》《起底苏交科内幕交易案：三名发起人股东参与，被罚没 420 万》</div>
+        <div class="work-insight">跟踪江苏上市金融机构动态，撰写资本市场分析稿件与金融监管调查报道，多篇被新华报业网转载。</div>
+        <div class="work-tags">#资本市场 #金融监管</div>
+      </div>
+
+      <div class="work-item">
+        <div class="work-meta">南财百舸</div>
+        <div class="work-title">《人物 | 顾学宁：一簇人间烟火，三分道骨仙风》</div>
+        <div class="work-insight">学术人物特写，以文学化笔法呈现经济学学者的人文学养与精神世界。</div>
+        <div class="work-tags">#人物特写 #学术随笔</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Experience -->
+  <div class="section">
+    <h2>从业背景</h2>
+
+    <div class="exp-item">
+      <div class="exp-meta">2025.05 – 至今</div>
+      <div class="exp-role">世见科技 · 「李稻葵」账号内容策划</div>
+      <div class="exp-detail">
+        经济学专家「李稻葵」内容共创主笔，保持周更 3 条节奏，覆盖宏观经济、民生领域。负责期间抖音账号涨粉近百万，2025 年涨粉 60 万，垂类赛道断层式领先。参与「钱的流转」抖音精选课、「开年第一课」等项目内容策划。「钱的流转」精选课 4 期视频总点赞超 25 万，获年度知识科普奖。春晚广告看经济风向上榜「中国记协」，社保新规解读等登上抖音、B站热搜。
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">2020.01 – 2025.05</div>
+      <div class="exp-role">吴晓波频道「财经日日评」· 科技方向主笔</div>
+      <div class="exp-detail">
+        保持交易日更新，追踪宏观经济、资本市场、科技产业等领域当日热点，撰写独立短评（新闻事实 + 点评，单篇约 500 字）。科技方向累计短评 200 余篇，覆盖 AI 大模型（98 篇）、互联网平台（65 篇）、芯片半导体（27 篇）等方向，深度追踪英伟达、苹果、阿里、字节等头部科技企业。单篇最高阅读量 10 万+，能在共识形成前独立判断，在热点面前保持逆向思考。
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">2020.07 – 2021.03</div>
+      <div class="exp-role">江苏金融观察 · 财经记者</div>
+      <div class="exp-detail">
+        跟踪江苏省上市金融机构动态，撰写分析稿件如《"逆天"12连板后，国联证券还会涨吗？》。推送工作日财经早报，参与策划金融论坛活动并撰写报道，维护银行客户关系。
+      </div>
+    </div>
+  </div>
+
+  <!-- Education -->
+  <div class="section">
+    <h2>教育经历</h2>
+
+    <div class="edu-item">
+      <div class="edu-meta">2021.09 – 2023.06</div>
+      <div class="edu-school">杭州师范大学 · 金融专硕</div>
+      <div class="edu-desc">毕业论文《科技金融政策与科技型中小上市企业融资约束——基于中小板数据的 DID 研究》，运用双重差分模型分析政策效果。经济学院研究生会宣传部部长，一等奖学金，GPA 排名专业前 10%。</div>
+    </div>
+
+    <div class="edu-item">
+      <div class="edu-meta">2019.07 – 2019.08</div>
+      <div class="edu-school">剑桥大学 · 企业家精神与创新课程</div>
+      <div class="edu-desc">参与英国剑桥大学与埃塞克大学联合举办的培训项目。协作完成全英文文创电商平台商业计划书，负责财务与盈利模块。团队获得青年财经领袖创业竞赛一等奖。</div>
+    </div>
+
+    <div class="edu-item">
+      <div class="edu-meta">2016.09 – 2020.06</div>
+      <div class="edu-school">南京财经大学 · 审计学学士</div>
+      <div class="edu-desc">教育游戏化课题研究，根据《腾讯传》设计文本交互小游戏，发表论文《以动机为导向的体验性教育游戏化案例设计》于《软件导刊·教育技术》。运营校园公众号「goNJUE」，单篇最高阅读量超 3 万。担任校团宣新闻采访部部长，领导团队完成校园新闻采编工作。</div>
+    </div>
+  </div>
+
+  <!-- Professional Background -->
+  <div class="section">
+    <h2>专业背景</h2>
+    <div class="skill-tags">
+      <span class="skill-tag">中级会计职称</span>
+      <span class="skill-tag">证券从业资格</span>
+      <span class="skill-tag">基金从业资格</span>
+      <span class="skill-tag">剑桥商务英语高级</span>
+      <span class="skill-tag">CET-6 607 分</span>
+      <span class="skill-tag">C1 驾驶证</span>
+      <span class="skill-tag">普通话二甲</span>
+      <span class="skill-tag">半程马拉松完赛</span>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

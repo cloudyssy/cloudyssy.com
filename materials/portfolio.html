@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>孙澍垚 · 作品集</title>
+<style>
+  /* ═══════════════════════════════════════════
+     Design Tokens — shared with resume.html
+     ═══════════════════════════════════════════ */
+  :root {
+    --bg: #FBF9F5;
+    --fg: #1A1A1A;
+    --muted: #6B6B6B;
+    --accent: #C5513B;
+    --accent-dim: #A34430;
+    --hairline: #E8E5DF;
+    --card-bg: #FFFFFF;
+    --font-sans: system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --font-serif: "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", Georgia, serif;
+    --gap: 24px;
+    --max-width: 960px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.75;
+  }
+
+  /* ── Typography ── */
+  h2 {
+    font-size: 13px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    color: var(--accent); margin-bottom: 20px;
+  }
+  h3 { font-size: 18px; font-weight: 600; line-height: 1.4; }
+  p { font-size: 15px; color: var(--fg); }
+  .serif { font-family: var(--font-serif); }
+
+  /* ── Layout ── */
+  .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+  section { padding: 80px 0; }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(251, 249, 245, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--hairline);
+  }
+  nav .nav-inner {
+    max-width: var(--max-width); margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 24px;
+  }
+  nav .nav-name { font-weight: 600; font-size: 15px; letter-spacing: 0.03em; }
+  nav .nav-links { display: flex; gap: 28px; }
+  nav .nav-links a {
+    text-decoration: none; color: var(--muted); font-size: 13px;
+    transition: color 0.2s;
+  }
+  nav .nav-links a:hover { color: var(--fg); }
+
+  /* ── Hero ── */
+  .hero { padding: 160px 0 100px; }
+  .hero h1 { font-size: 52px; font-weight: 700; letter-spacing: 0.03em; line-height: 1.15; }
+  .hero .hero-tagline { font-size: 20px; color: var(--muted); margin-top: 16px; max-width: 520px; line-height: 1.6; }
+  .hero .hero-tagline strong { color: var(--fg); font-weight: 600; }
+  .hero .hero-cta { display: flex; gap: 16px; margin-top: 32px; }
+  .btn {
+    display: inline-block; padding: 10px 24px;
+    font-size: 14px; font-weight: 500; text-decoration: none;
+    border-radius: 4px; transition: all 0.2s;
+  }
+  .btn-primary { background: var(--fg); color: var(--bg); }
+  .btn-primary:hover { background: var(--accent); }
+  .btn-ghost { color: var(--fg); border: 1px solid var(--hairline); }
+  .btn-ghost:hover { border-color: var(--fg); }
+
+  /* ── About ── */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+    align-items: start;
+  }
+  .about-text p { margin-bottom: 16px; font-size: 15px; line-height: 1.85; }
+  .about-text p:last-child { margin-bottom: 0; }
+
+  .stats-card {
+    border: 1px solid var(--hairline); border-radius: 4px; padding: 28px;
+    background: var(--card-bg);
+  }
+  .stats-card .stat-row { display: flex; justify-content: space-between; padding: 12px 0; }
+  .stats-card .stat-row + .stat-row { border-top: 0.5px solid var(--hairline); }
+  .stats-card .stat-val { font-size: 24px; font-weight: 700; font-family: var(--font-serif); }
+  .stats-card .stat-lbl { font-size: 13px; color: var(--muted); align-self: flex-end; padding-bottom: 4px; }
+
+  /* ── Table of Contents ── */
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 48px; }
+  .toc a {
+    padding: 6px 16px; font-size: 13px; font-weight: 500;
+    border: 1px solid var(--hairline); border-radius: 4px;
+    text-decoration: none; color: var(--muted);
+    transition: all 0.2s; font-family: var(--font-sans);
+  }
+  .toc a:hover { border-color: var(--fg); color: var(--fg); }
+
+  /* ── Column Section ── */
+  .column-section { padding: 64px 0; }
+  .column-section + .column-section { border-top: 0.5px solid var(--hairline); }
+
+  .column-header { margin-bottom: 32px; }
+  .column-header .col-timeline {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+    color: var(--accent); margin-bottom: 4px;
+  }
+  .column-header h3 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .column-header .col-role { font-size: 14px; color: var(--muted); margin-bottom: 12px; }
+  .column-header .col-desc { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 600px; }
+
+  /* ── Works Grid ── */
+  .works-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+
+  .work-card {
+    background: var(--card-bg); border: 1px solid var(--hairline);
+    border-radius: 4px; padding: 24px; cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    display: flex; flex-direction: column;
+  }
+  .work-card:hover { border-color: #d0cdc6; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+  .work-card.hidden { display: none; }
+
+  .work-card .card-meta { font-size: 11px; color: var(--muted); margin-bottom: 6px; display: flex; gap: 12px; align-items: center; }
+  .work-card .card-cat {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
+    color: var(--accent); background: rgba(197, 81, 59, 0.06);
+    padding: 1px 8px; border-radius: 3px;
+  }
+  .work-card .card-title { font-size: 15px; font-weight: 600; line-height: 1.45; margin-bottom: 8px; }
+  .work-card .card-insight { font-size: 13px; color: var(--muted); line-height: 1.65; flex: 1; }
+
+  /* ── Compact Card (for non-吴晓波频道 works) ── */
+  .work-card.compact { cursor: default; }
+  .work-card.compact:hover { border-color: var(--hairline); box-shadow: none; }
+  .work-card.compact .card-title { font-size: 14px; }
+
+  /* ── Card Expanded State (吴晓波频道 cards only) ── */
+  .work-card.expandable { cursor: pointer; }
+  .work-card.expanded { grid-column: 1 / -1; cursor: default; border-color: #d0cdc6; }
+  .work-card .card-detail { display: none; margin-top: 16px; padding-top: 16px; border-top: 0.5px solid var(--hairline); }
+  .work-card.expanded .card-detail { display: block; }
+  .card-detail .detail-review {
+    font-size: 14px; line-height: 1.85; color: var(--fg);
+    margin-bottom: 12px;
+  }
+  .card-detail .detail-tags { font-size: 11px; color: var(--muted); }
+
+  /* ── Sub-filters (吴晓波频道) ── */
+  .sub-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .sub-filter-btn {
+    padding: 5px 14px; font-size: 12px; font-weight: 500;
+    border: 1px solid var(--hairline); border-radius: 20px;
+    background: transparent; color: var(--muted); cursor: pointer;
+    transition: all 0.2s; font-family: var(--font-sans);
+  }
+  .sub-filter-btn:hover { border-color: var(--fg); color: var(--fg); }
+  .sub-filter-btn.active { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+
+  /* ── Footer ── */
+  footer { border-top: 0.5px solid var(--hairline); padding: 40px 0; }
+  footer .footer-inner {
+    max-width: var(--max-width); margin: 0 auto; padding: 0 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer .footer-text { font-size: 13px; color: var(--muted); }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .hero { padding: 120px 0 60px; }
+    .hero h1 { font-size: 36px; }
+    .hero .hero-tagline { font-size: 17px; }
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
+    .works-grid { grid-template-columns: 1fr; }
+    section { padding: 56px 0; }
+    .column-section { padding: 48px 0; }
+    nav .nav-links { gap: 16px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 30px; }
+    nav .nav-inner { padding: 12px 16px; }
+    .work-card { padding: 18px; }
+    .toc { gap: 6px; }
+    .toc a { padding: 5px 12px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-name">孙澍垚</div>
+    <div class="nav-links">
+      <a href="#about">关于</a>
+      <a href="#works">作品</a>
+      <a href="resume.html">简历</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <h1>财经写作者<br>专注 AI 科技内容</h1>
+    <p class="hero-tagline">
+      5 年财经内容创作经验，覆盖 <strong>236 篇科技短评</strong>与 <strong>50+ 条财经视频脚本</strong>。
+      用财经视角看科技——看商业模式而非参数，看现金流而非 PR 稿。
+    </p>
+    <div class="hero-cta">
+      <a href="#works" class="btn btn-primary">作品精选</a>
+      <a href="resume.html" class="btn btn-ghost">下载简历</a>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="container">
+    <h2>关于</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          我是孙澍垚，财经写作者。金融专硕出身，从审计到财经记者，再到 AI 科技内容创作者——走的是一条把财经方法论带进科技报道的路。
+        </p>
+        <p>
+          目前在世见科技参与经济学专家账号「李稻葵」的内容共创，负责财经视频脚本策划与撰写，期间账号涨粉近百万。此前在吴晓波频道「财经日日评」担任科技方向主笔，交易日更新科技短评 236 篇，覆盖 AI 大模型、芯片、智驾、机器人等前沿方向。
+        </p>
+        <p>
+          所有作品基于公开信息做独立分析——没有企业通稿，没有付费软文，每一篇都是自己的判断。
+        </p>
+      </div>
+      <div class="stats-card">
+        <div class="stat-row">
+          <span class="stat-lbl">科技短评</span>
+          <span class="stat-val">236</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-lbl">视频脚本</span>
+          <span class="stat-val">50+</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-lbl">累计阅读</span>
+          <span class="stat-val">100 万+</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-lbl">视频最高点赞</span>
+          <span class="stat-val">20 万+</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-lbl">时间跨度</span>
+          <span class="stat-val">2020–2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Works -->
+<section id="works">
+  <div class="container">
+    <h2>作品精选</h2>
+
+    <!-- Table of Contents -->
+    <div class="toc">
+      <a href="#col-lkq">李稻葵 · 视频脚本</a>
+      <a href="#col-wxb">吴晓波频道 · 科技短评</a>
+      <a href="#col-nan">楠哥有才气 · 商业视频</a>
+      <a href="#col-jsjr">江苏金融观察 · 财经报道</a>
+      <a href="#col-bc">冰川私享号 · 政策评论</a>
+      <a href="#col-nc">南财百舸 · 人物特写</a>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     Column 1: 李稻葵 · 财经视频脚本
+     ═══════════════════════════════════════ -->
+    <div class="column-section" id="col-lkq">
+      <div class="column-header">
+        <div class="col-timeline">2025.05 — 至今</div>
+        <h3>李稻葵 · 财经视频脚本</h3>
+        <div class="col-role">世见科技 · 内容策划 / 主笔</div>
+        <div class="col-desc">
+          经济学专家账号「李稻葵」抖音内容共创主笔，保持周更 3 条节奏，覆盖宏观经济、AI、民生领域。负责期间抖音账号涨粉近百万，2025 年涨粉 60 万，垂类赛道断层式领先。参与「钱的流转」抖音精选课、「开年第一课」等项目内容策划。
+        </div>
+      </div>
+      <div class="works-grid">
+
+        <div class="work-card compact">
+          <div class="card-meta"><span>2026.07</span><span class="card-cat">视频脚本</span></div>
+          <div class="card-title">AI 超额红利 应当如何分配</div>
+          <div class="card-insight">从韩国「AI 公民红利」制度切入，讨论 AI 时代财富分配——效率优先还是公平优先。串联三星、海力士超额利润与台湾 K 型分化，提出机器人税 + UBI 制度设想。</div>
+        </div>
+
+        <div class="work-card compact">
+          <div class="card-meta"><span>2026.06</span><span class="card-cat">视频脚本</span></div>
+          <div class="card-title">机器人税 要不要征</div>
+          <div class="card-insight">从宇树科技王兴兴观点切入，结合历次技术革命中的贫富分化，论证机器人税 + UBI 制度的必要性。引用多国 UBI 实验数据回应「养懒人」质疑。</div>
+        </div>
+
+        <div class="work-card compact">
+          <div class="card-meta"><span>2026.05</span><span class="card-cat">视频脚本</span></div>
+          <div class="card-title">演唱会被紧急叫停 上亿损失谁该反思</div>
+          <div class="card-insight">华晨宇演唱会开唱前 9 天被叫停，综合损失上亿。从政府组织失灵、红线规则模糊、损失分担缺位三个层次追问——上线后点赞破万后被下架，引发广泛讨论。</div>
+        </div>
+
+        <div class="work-card compact">
+          <div class="card-meta"><span>2026.04</span><span class="card-cat">视频脚本</span></div>
+          <div class="card-title">2028 智能危机 真的会来吗？</div>
+          <div class="card-insight">AI 安全与风险管理话题。讨论 AI 递归自我改进的潜在风险，以及技术加速发展下人类社会的应对机制。</div>
+        </div>
+
+        <div class="work-card compact">
+          <div class="card-meta"><span>2026.03</span><span class="card-cat">视频脚本</span></div>
+          <div class="card-title">社保新规 有啥影响</div>
+          <div class="card-insight">社保政策解读，将专业政策条文翻译为大众可理解的语言。登上抖音、B站热搜。</div>
+        </div>
+
+        <div class="work-card compact">
+          <div class="card-meta"><span>2026.02</span><span class="card-cat">视频脚本</span></div>
+          <div class="card-title">存钱养老毫无意义？马斯克预言怎么看</div>
+          <div class="card-insight">从马斯克关于 AI 替代劳动的预言切入，讨论养老储蓄在 AI 时代的意义——兼论技术变革对个人财务规划的冲击。</div>
+        </div>
+
+        <div class="work-card compact">
+          <div class="card-meta"><span>2025.11</span><span class="card-cat">视频脚本</span></div>
+          <div class="card-title">中国经济「半年报」数据背后有何隐忧</div>
+          <div class="card-insight">宏观经济数据分析类脚本。从 GDP 增速、消费、出口等多维度拆解经济数据，兼顾专业深度与大众传播。</div>
+        </div>
+
+        <div class="work-card compact">
+          <div class="card-meta"><span>2025.10</span><span class="card-cat">视频脚本</span></div>
+          <div class="card-title">祝贺张雪机车夺冠 该为摩托产业松绑了</div>
+          <div class="card-insight">从摩托车赛事热点切入产业政策讨论。以具体事件为钩子，串联摩托车产业从管制到逆袭的叙事线。</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     Column 2: 吴晓波频道 · 科技短评
+     ═══════════════════════════════════════ -->
+    <div class="column-section" id="col-wxb">
+      <div class="column-header">
+        <div class="col-timeline">2024.03 — 2026.06</div>
+        <h3>吴晓波频道 · 科技短评</h3>
+        <div class="col-role">「财经日日评」科技方向主笔</div>
+        <div class="col-desc">
+          保持交易日更新，追踪 AI 大模型、芯片半导体、自动驾驶、机器人、消费电子、航天等领域当日热点。累计 236 篇科技短评，单篇最高阅读量 10 万+。以下从 236 篇中精选 20 篇代表作。点击卡片展开详文。
+        </div>
+      </div>
+
+      <!-- Sub-filters -->
+      <div class="sub-filters">
+        <button class="sub-filter-btn active" data-filter="all">全部</button>
+        <button class="sub-filter-btn" data-filter="ai">AI / 大模型</button>
+        <button class="sub-filter-btn" data-filter="chip">芯片 / 半导体</button>
+        <button class="sub-filter-btn" data-filter="auto">自动驾驶</button>
+        <button class="sub-filter-btn" data-filter="robot">机器人</button>
+        <button class="sub-filter-btn" data-filter="consumer">消费电子</button>
+        <button class="sub-filter-btn" data-filter="space">航天 / 前沿科技</button>
+      </div>
+
+      <div class="works-grid" id="wxbGrid">
+
+        <!-- AI -->
+        <div class="work-card expandable" data-cat="ai">
+          <div class="card-meta"><span>2026.06.08</span><span class="card-cat">AI</span></div>
+          <div class="card-title">中国 AI 大模型调用量连续六周超美国：榜单背后的深层博弈</div>
+          <div class="card-insight">不满足于超越的叙事快感，分析了榜单流动性、价格战、开源生态等深层因素。</div>
+          <div class="card-detail">
+            <div class="detail-review">芯片等硬件受限，国产大模型通过算法和工程创新实现性能突围。新推出的模型往往能迅速冲上榜单，但持久性还待观察，行业整体仍处于快速迭代期。多数开发者会根据任务内容选用最合适的模型，并非只依赖单一模型，也加剧榜单流动性。Deepseek 凭借较高的质价比，稳居榜单前列。今年智能体应用加速落地，用户 Token 使用量激增。此前发挥稳定的 Claude 模型跌出前五，除去外部竞争加剧，也有自身火力分散的原因。整体而言，大模型竞争刚拉开帷幕。</div>
+            <div class="detail-tags">数据分析 · 竞争格局 · 吴晓波频道</div>
+          </div>
+        </div>
+
+        <div class="work-card expandable" data-cat="ai">
+          <div class="card-meta"><span>2026.06.05</span><span class="card-cat">AI</span></div>
+          <div class="card-title">Anthropic 呼吁全球暂停 AI 开发，但它的论据站得住脚吗？</div>
+          <div class="card-insight">80% 代码由 AI 撰写 ≠ 80% 价值由 AI 创造。拆解论据的逻辑漏洞，同时承认预警价值。</div>
+          <div class="card-detail">
+            <div class="detail-review">几乎各行业都在加速拥抱 AI，Anthropic 此时呼吁踩刹车，似乎有些不合时宜。从现实出发，技术和资本突飞猛进，包括 Anthropic 自身也在冲刺 IPO，竞赛一旦开始恐怕很难降速。需要注意的是，80% 代码由 AI 撰写，不等于 80% 的价值由 AI 创造——文章以此评估，可能高估了实际技术跃迁。不过，其预警还是提示了 AI 递归自我改进提前到来的风险，若 AI 进化速度超过人类，犯下的错误将更难被发现，最终可能在一次次迭代中累积失控。文章更击中了人类在 AI 时代深层的存在焦虑。</div>
+            <div class="detail-tags">阅读 10 万+ · 逆向分析 · 吴晓波频道</div>
+          </div>
+        </div>
+
+        <div class="work-card expandable" data-cat="ai">
+          <div class="card-meta"><span>2026.06.30</span><span class="card-cat">AI</span></div>
+          <div class="card-title">字节跳动 CEO 时隔四年再发全员信：大模型时代的组织逻辑</div>
+          <div class="card-insight">从一封内部邮件读取互联网时代与大模型时代组织逻辑的根本差异——铺产品试错 vs 高度聚焦垂直竞争。</div>
+          <div class="card-detail">
+            <div class="detail-review">2022 年，字节全员信瞄准公司体量激增带来的挑战，号召回归创业初心。四年后，全员信的焦点已转向 AI 革新，强调追求高目标。AI 技术冲击使得字节对「大公司病」更加警惕，直面一线业务、减少管理冗余的重要性被进一步拔高。与互联网时代铺产品、试错取胜的路径不同，大模型时代的竞争更加垂直，需要高度聚焦的资源与极短的决策链路。互联网时代的巨头们不乏烧钱的底气，但真正决定差距的，还是其组织架构能否跟上 AI 节奏。</div>
+            <div class="detail-tags">组织变革 · 行业判断 · 吴晓波频道</div>
+          </div>
+        </div>
+
+        <div class="work-card expandable" data-cat="ai">
+          <div class="card-meta"><span>2025.02.17</span><span class="card-cat">AI</span></div>
+          <div class="card-title">微信灰测接入 DeepSeek：王炸组合的想象空间与落地现实</div>
+          <div class="card-insight">DeepSeek 出圈后首个被巨头集成的重要节点。抓住开源模型借超级应用分发这一关键变量。</div>
+          <div class="card-detail">
+            <div class="detail-review">微信灰测接入 DeepSeek 后，被市场称为「王炸组合」。一个是用户数庞大的国民社交平台，一个是席卷全球的国内领先 AI 大模型，二者的结合进一步打开了 AI 普惠化与商业化的想象空间。开源模型进入超级平台，搭载庞大的用户生态和丰富的内容场景，不仅将重塑搜索与内容等个性化服务，也有望拓宽微信在广告和营销上的边界。</div>
+            <div class="detail-tags">产业节点 · 开源生态 · 吴晓波频道</div>
+          </div>
+        </div>
+
+        <div class="work-card expandable" data-cat="ai">
+          <div class="card-meta"><span>2025.02.28</span><span class="card-cat">AI</span></div>
+          <div class="card-title">OpenAI 发布最具「情商」的 GPT-4.5，但定价比竞品贵千倍</div>
+          <div class="card-insight">市场一片叫好时，点出定价比 DeepSeek 贵千倍、核心能力提升有限的关键矛盾。</div>
+          <div class="card-detail">
+            <div class="detail-review">DeepSeek 这条「鲶鱼」以低成本和开源搅动 AI 圈的同时，OpenAI 推出的新模型在成本上又创下了新高。GPT-4.5 的定价可能要昂贵上千倍。新模型主打「高情商」，OpenAI 或希望在当前市场中找到差异化优势。但是考虑到模型的高成本高定价，加上其能力提升并不明显，市场接受度可能较为有限。距离 OpenAI 发布 GPT-4 已将近两年时间，各路玩家追逐下，OpenAI 可能需要在推出过渡性模型之外，加快推出 GPT-5，向市场证明自身的实力。</div>
+            <div class="detail-tags">逆向思考 · 成本分析 · 吴晓波频道</div>
+          </div>
+        </div>
+
+        <div class="work-card expandable" data-cat="ai">
+          <div class="card-meta"><span>2025.01.15</span><span class="card-cat">AI</span></div>
+          <div class="card-title">OpenAI 发布首款 AI Agent 产品：从聊天到执行的关键一跃</div>
+          <div class="card-insight">点出 Agent 与传统语音助手的本质区别——执行能力而非对话能力。预判了 2025 年 Agent 产业化趋势。</div>
+          <div class="card-detail">
+            <div class="detail-review">OpenAI 新推出的功能让 AI 为人类「打工」这件事落地了。和 Siri 这类语音助手相比，智能体（Agent）最大的不同在于可以执行实际任务，比如说每天定时查看股市行情并进行推送。AI 智能体更像一个具备执行力的私人助理。OpenAI 此前已表示找到了「通往 AGI 之路」，AI 智能体就是其中的关键一环。可以预见的是，AI 智能体的广泛应用必然会颠覆劳动力市场。</div>
+            <div class="detail-tags">产业趋势 · Agent · 吴晓波频道</div>
+          </div>
+        </div>
+
+        <div class="work-card expandable" data-cat="ai">
+          <div class="card-meta"><span>2024.03.25</span><span class="card-cat">AI</span></div>
+          <div class="card-title">蔡崇信称已看到 AI 数据中心泡沫苗头</div>
+          <div class="card-insight">2024 年初 AI 基建狂潮起势时，率先提出算力泡沫质疑。半年后被 DeepSeek 低成本模型验证。</div>
+          <div class="card-detail">
+            <div class="detail-review">科技巨头竞相宣布百亿、千亿美元的数据中心建设计划，确实是让市场应接不暇。不可否认，AI 是当前的重要方向，算力建设更是推动技术研发的底层「燃料」。但是如此大规模的 AI 基建投资，是基于足够明确的市场需求，还是来自对未来应用场景的美好想象，仍然需要打上问号。尤其是低成本开发的模型也已有了不俗表现，更加剧市场对于算力过剩的担忧。当前阶段，AI 的技术发展与实际应用尚未有效匹配，投资回报存在较大不确定性。</div>
+            <div class="detail-tags">前瞻判断 · 算力泡沫 · 吴晓波频道</div>
+          </div>
+        </div>
+
+        <!-- Chips -->
+        <div class="work-card expandable" data-cat="chip">
+          <div class="card-meta"><span>2025.10.30</span><span class="card-cat">芯片</span></div>
+          <div class="card-title">英伟达市值突破 5 万亿美元：AI 资本内循环的双刃剑</div>
+          <div class="card-insight">点出「资本内循环正在模糊科技巨头身份边界」——英伟达既是供应商也是投资人。</div>
+          <div class="card-detail">
+            <div class="detail-review">人工智能浪潮助推，英伟达成为全球首家市值触及 5 万亿美元的公司。当前 AI 军备赛愈演愈烈，作为算力基础设施的重要供应商，英伟达的营收和净利增长相当强劲。需要注意的是，OpenAI 此前发起巨额融资计划，英伟达也是关键参与者。资本内循环正在模糊科技巨头的身份边界，促使多方合力推动产业临界点到来。不止英伟达，AI 技术革命更是本轮美股上涨的主要驱动力，但当前 AI 终端应用实现盈利者寥寥，资本预支的叙事何时能实现商业闭环，仍要打上问号。</div>
+            <div class="detail-tags">资本市场 · 产业生态 · 吴晓波频道</div>
+          </div>
+        </div>
+
+        <div class="work-card expandable" data-cat="chip">
+          <div class="card-meta"><span>2025.03.05</span><span class="card-cat">芯片</span></div>
+          <div class="card-title">台积电千亿美元赴美：关税博弈下的生存算术</div>
+          <div class="card-insight">将关税博弈、台积电的生存策略、美国制造业回流的困境三条线交织分析。</div>
+          <div class="card-detail">
+            <div class="detail-review">特朗普上台后，为推动半导体产业回流美国，不断通过关税政策施压。台积电此时追加在美投资，或也是安抚特朗普以换得短期「太平」。虽然「关税大棒」成功引来台积电的巨额投资，但其能在多大程度提振美国半导体产业，仍充满不确定。美国在半导体制造环节长期依赖外部供给，建设本土供应链的成本高昂，更需要时间。同时，美国半导体销售主要靠出口，在其管制压力下，包括我国在内的不少国家地区都在加快半导体自主化。</div>
+            <div class="detail-tags">地缘政治 · 芯片博弈 · 吴晓波频道</div>
+          </div>
+        </div>
+
+        <div class="work-card expandable" data-cat="chip">
+          <div class="card-meta"><span>2025.03.17</span><span class="card-cat">芯片</span></div>
+          <div class="card-title">三星、海力士加入存储芯片涨价潮：AI 如何重塑芯片价格周期</div>
+          <div class="card-insight">从供需错配的产业规律出发，分析三家巨头高度集中的竞争格局下 AI 热潮的推升效应。</div>
+          <div class="card-detail">
+            <div class="detail-review">芯片行业的市场需求变化较快，难以准确预测，而产能调整往往存在滞后性，就容易造成供需错配的情况。三星、海力士等国际大厂减产，也是为了改善供求关系，推动存储芯片价格回升。经历此前价格调整，前期积压的存储芯片或已逐渐消化至正常水平，为厂商调价提供了一定支撑。AI、智驾等技术落地，有望进一步刺激存储芯片的需求，为市场带去广阔的想象空间。</div>
+            <div class="detail-tags">产业规律 · 供需分析 · 吴晓波频道</div>
+          </div>
+        </div>
+
+        <!-- Auto -->
+        <div class="work-card expandable" data-cat="auto">
+          <div class="card-meta"><span>2025.02.11</span><span class="card-cat">自动驾驶</span></div>
+          <div class="card-title">比亚迪将高阶智驾打入 7 万元区间：技术下沉的双重效应</div>
+          <div class="card-insight">2025 年汽车产业最重要的事件之一。抓住技术民主化与产业链压降的双重含义。</div>
+          <div class="card-detail">
+            <div class="detail-review">曾经凭借低价策略搅动新能源汽车市场的比亚迪，再次开启了智驾领域的低成本普及时代。此前业内推出的智驾系统主要搭载于中高端车型，比亚迪发布的新系统填补了市场空白。智驾系统的价格下探后，可能会进一步压降产业链各环节的技术成本。在比亚迪的压力之下，其他车企的智驾研发速度也会加快，智驾系统普及有望加速。智驾研发本身投入较大，智驾系统开启价格革命后，车企们要平衡技术与盈利问题，可能会更艰难。</div>
+            <div class="detail-tags">技术民主化 · 产业拐点 · 吴晓波频道</div>
+          </div>
+        </div>
+
+        <div class="work-card expandable" data-cat="auto">
+          <div class="card-meta"><span>2026.06.17</span><span class="card-cat">自动驾驶</span></div>
+          <div class="card-title">L3 自动驾驶新国标公示：法律责任重新分配的制度时刻</div>
+          <div class="card-insight">L3 是智驾从辅助到自主的分水岭，核心不是技术而是法律——驾驶员不再是唯一责任主体。</div>
+          <div class="card-detail">
+            <div class="detail-review">现在市面上多数智驾车型，搭载的是 L2 级辅助驾驶系统，要求驾驶员全程监控路况、随时准备接管。L3 级有条件自动驾驶则被视为技术分水岭，由系统掌握驾驶行为的主导权。L3 级系统激活后，驾驶员不再是唯一责任主体，车企、智驾方案提供商等也可能成为责任承担方。考虑到安全性，L3 级智驾的部署极为审慎，须以国家强制性标准作为门槛。L3 是通往更高级别自动驾驶的必经之路，不少头部车企已在提前布局。</div>
+            <div class="detail-tags">政策解读 · 制度分析 · 吴晓波频道</div>
+          </div>
+        </div>
+
+        <!-- Robot -->
+        <div class="work-card expandable" data-cat="robot">
+          <div class="card-meta"><span>2025.02.17</span><span class="card-cat">机器人</span></div>
+          <div class="card-title">宇树科技机器人算法升级：从跳舞自由到商业化落地还有多远</div>
+          <div class="card-insight">算法升级 → 场景泛化 → 商业化落地。当时对「量产元年」的判断已被后续验证。</div>
+          <div class="card-detail">
+            <div class="detail-review">算法升级后，从视频来看，宇树科技的人形机器人已经实现了「舞蹈自由」。此次算法升级的核心是优化机器学习和深度学习能力，机器人的协调度和灵活性提升后，也能更好应用在不同场景。科技巨头与初创公司竞相布局，今年被看作人形机器人商业化量产的关键一年。人口结构与家庭结构调整下，家用服务类人形机器人的市场前景广阔。当前，生成式 AI 的发展推动了人形机器人的智能化水平，人形机器人生产在压降成本上也已取得一定成效。</div>
+            <div class="detail-tags">商业化逻辑 · 场景分析 · 吴晓波频道</div>
+          </div>
+        </div>
+
+        <div class="work-card expandable" data-cat="robot">
+          <div class="card-meta"><span>2025.08.12</span><span class="card-cat">机器人</span></div>
+          <div class="card-title">杭州为机器人立法：产业政策需要专业力量参与</div>
+          <div class="card-insight">将地方法规置于产业变革与区域经济竞争的框架下分析。技术立法需要专业力量参与。</div>
+          <div class="card-detail">
+            <div class="detail-review">今年以来，具身智能机器人几度成为市场焦点。近期，多家头部企业拿下量产大单，再次点燃资本热情。人形机器人的商业化落地迫近，大厂投资加码的同时，各地政府也都积极布局。由技术革命驱动的产业变革，不仅能够带来税收和就业增量，还有望重塑区域经济的竞争格局。在现有政策的基础上，杭州进一步将具身智能机器人纳入地方法规，为产业发展提供了监管框架与制度保障。</div>
+            <div class="detail-tags">产业政策 · 区域竞争 · 吴晓波频道</div>
+          </div>
+        </div>
+
+        <!-- Consumer -->
+        <div class="work-card expandable" data-cat="consumer">
+          <div class="card-meta"><span>2025.01.16</span><span class="card-cat">消费电子</span></div>
+          <div class="card-title">苹果 Q4 中国出货量跌 25%：创新匮乏是比销量更严峻的问题</div>
+          <div class="card-insight">从销量数据层层递进到创新匮乏、AI 功能缺位、本土竞争三大结构性问题。</div>
+          <div class="card-detail">
+            <div class="detail-review">苹果手机的新品发布会一般在秋季举行，叠加购物节等活动，四季度往往也是苹果的销售旺季。可惜，传统销售旺季未能挽回苹果手机在华销量下滑的态势。虽然苹果还保持市场第一的地位，但其领先优势已经大幅缩水。国产新机密集发布，市场内供消费者选择的高性能、高性价比手机品牌众多，苹果的份额被进一步抢占。苹果新机在国内表现不够理想，一部分原因在于其 AI 功能没有在国内正式上线。曾经凭借创新成为行业标杆的苹果，正在残酷的市场竞争中逐渐丢失这一优势。</div>
+            <div class="detail-tags">数据驱动 · 竞争分析 · 吴晓波频道</div>
+          </div>
+        </div>
+
+        <div class="work-card expandable" data-cat="consumer">
+          <div class="card-meta"><span>2026.03.12</span><span class="card-cat">消费电子</span></div>
+          <div class="card-title">苹果首款折叠屏 iPhone Fold：迟到者的技术溢价与物理极限</div>
+          <div class="card-insight">不嘲讽迟到，而是分析其技术成熟再入场的策略逻辑，同时冷静指出物理极限的现实约束。</div>
+          <div class="card-detail">
+            <div class="detail-review">苹果的风格一贯是技术成熟再推产品，折叠屏手机可以说是「千呼万唤始出来」。此前其对折叠机的主要顾虑，在于屏幕折痕的处理。为了实现近乎无痕的体验，苹果深度整合供应链，专门开发了铰链等关键部件。至于折叠屏手机在极低温环境下易损坏的难题，主要由材料的物理特性决定，苹果新机在这方面取得的突破，可能也比较有限。高成本材料也将这款手机的定价推升到新高度，苹果拥有庞大的存量高端客户，加上首款折叠屏手机自带的稀缺性、话题度，其销量预计会有不错表现。</div>
+            <div class="detail-tags">供应链分析 · 产品策略 · 吴晓波频道</div>
+          </div>
+        </div>
+
+        <div class="work-card expandable" data-cat="consumer">
+          <div class="card-meta"><span>2026.06.16</span><span class="card-cat">消费电子</span></div>
+          <div class="card-title">Meta 计划限制员工 Token 使用量：AI 军备赛的组织行为学</div>
+          <div class="card-insight">从「公司内卷 Token 用量」这个荒诞切口，拆解 AI 军备赛中组织行为学的深层问题。</div>
+          <div class="card-detail">
+            <div class="detail-review">黄仁勋在今年 GTC 大会上，将工程师的价值与 token 用量挂钩，直接点燃业内的 token 竞赛。害怕错过技术转折点的集体焦虑下，对于 token 用量上不封顶、多多益善的态度，似乎是企业全力拥抱 AI 的最好证明。不过在看到成效前，先到来的是 token 用量飙升造成的巨额成本。不仅是 Meta，前不久亚马逊也已关停内部排行榜。token 消耗量和实际生产力本就不是简单正相关，不合理激励更会加剧无意义消耗，导致组织陷入「内卷」。</div>
+            <div class="detail-tags">组织行为 · 幽默洞察 · 吴晓波频道</div>
+          </div>
+        </div>
+
+        <!-- Space -->
+        <div class="work-card expandable" data-cat="space">
+          <div class="card-meta"><span>2026.02.03</span><span class="card-cat">航天</span></div>
+          <div class="card-title">马斯克宣布 SpaceX 收购 xAI：太空算力中心的终极蓝图</div>
+          <div class="card-insight">跳出交易本身，看到太空算力数据中心这一布局意图，将 AI、航天、芯片三条线索打通。</div>
+          <div class="card-detail">
+            <div class="detail-review">布局横跨多个前沿领域，马斯克已经是资本市场极具号召力的风向标人物。数年前，马斯克就萌生出改造太空空间、开发太空能源的想法，随着人工智能技术发展，这一设想逐步细化为在太空建设算力中心，破解地面 AI 发展的资源约束。推动 SpaceX 收购 xAI，正是实现该计划的关键一步。合并后，两家公司作为整体上市，协同效应产生溢价，有望进一步放大估值，推动合并企业成为史无前例的庞大科技实体。</div>
+            <div class="detail-tags">跨界整合 · 趋势判断 · 吴晓波频道</div>
+          </div>
+        </div>
+
+        <div class="work-card expandable" data-cat="space">
+          <div class="card-meta"><span>2024.10.14</span><span class="card-cat">航天</span></div>
+          <div class="card-title">SpaceX 星舰第五飞：站在失败的肩膀上，筷子夹住火箭</div>
+          <div class="card-insight">2024 年科技名场面。将技术突破放在人类航天史的叙事坐标中，宏大而不空洞。</div>
+          <div class="card-detail">
+            <div class="detail-review">在探索宇宙的征程上，SpaceX 创造了新历史。使用机械臂回收助推器，对于火箭的重复利用而言意义重大。这种「筷子夹火箭」式的回收方法，既能够减少火箭部分在着陆时受到的损伤，也为其在发射平台补充燃料提供可能，在延长火箭寿命的同时提高了发射效率。这次试飞成功，也是给未来进一步实现全火箭回收打下了基础。近一年半时间，「星舰」已经进行了五次试飞，可以说是站在失败的肩膀上不断前行。</div>
+            <div class="detail-tags">宏大叙事 · 技术突破 · 吴晓波频道</div>
+          </div>
+        </div>
+
+        <div class="work-card expandable" data-cat="space">
+          <div class="card-meta"><span>2025.10.09</span><span class="card-cat">航天</span></div>
+          <div class="card-title">谷歌科学家连续两年斩获诺贝尔奖：AI 与基础科学的交叉叙事</div>
+          <div class="card-insight">从诺贝尔奖切入，串联量子计算、AI for Science 等技术脉络。跨领域理解力的展示。</div>
+          <div class="card-detail">
+            <div class="detail-review">三位科学家凭借上世纪 80 年代的研究成果，获得了今年的诺贝尔物理学奖。其实验证明了，量子力学行为不仅存在于原子等极微观层面，也可以通过超导出现在日常的宏观系统中。除去填补基础科学领域的空白，这一发现更在技术层面上为超导量子计算奠定了基础，提供了能够操控量子计算基本单位的物理载体。去年谷歌推出量子计算芯片 Willow，展现出远超经典计算的显著优越性，背后同样离不开这一研究发现。</div>
+            <div class="detail-tags">跨领域 · 基础科学 · 吴晓波频道</div>
+          </div>
+        </div>
+
+      </div><!-- /wxbGrid -->
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     Column 3: 楠哥有才气 · 商业视频脚本
+     ═══════════════════════════════════════ -->
+    <div class="column-section" id="col-nan">
+      <div class="column-header">
+        <div class="col-timeline">2025</div>
+        <h3>楠哥有才气 · 商业视频脚本</h3>
+        <div class="col-role">「楠哥有才气」视频脚本作者</div>
+        <div class="col-desc">
+          商业分析类视频脚本，将企业成长史与产业趋势结合，以通俗叙事解释复杂商业逻辑。
+        </div>
+      </div>
+      <div class="works-grid">
+
+        <div class="work-card compact">
+          <div class="card-meta"><span>2025</span><span class="card-cat">商业分析</span></div>
+          <div class="card-title">深挖蜜雪冰城发家史</div>
+          <div class="card-insight">港交所上市之际，揭秘蜜雪冰城从城中村刨冰店到万店帝国的发家史。创始人张红超的草根创业故事——4 次拆迁、3 次倒闭，低价策略背后的供应链逻辑。</div>
+        </div>
+
+        <div class="work-card compact">
+          <div class="card-meta"><span>2025</span><span class="card-cat">产业分析</span></div>
+          <div class="card-title">科技巨头争相砸钱中国高校？</div>
+          <div class="card-insight">从雷军、库克同一时间给中国高校捐钱切入，串联三星小米十年恩怨——从断供危机到角色对换，折射中国科技创新的崛起。</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     Column 4: 江苏金融观察 · 财经报道
+     ═══════════════════════════════════════ -->
+    <div class="column-section" id="col-jsjr">
+      <div class="column-header">
+        <div class="col-timeline">2020.07 — 2021.03</div>
+        <h3>江苏金融观察 · 财经报道</h3>
+        <div class="col-role">江苏金融观察 · 财经记者</div>
+        <div class="col-desc">
+          跟踪江苏省上市金融机构动态，撰写资本市场分析稿件与金融监管调查报道。多篇被新华报业网转载。
+        </div>
+      </div>
+      <div class="works-grid">
+
+        <div class="work-card compact">
+          <div class="card-meta"><span>2020</span><span class="card-cat">资本市场</span></div>
+          <div class="card-title">「逆天」12 连板后，国联证券还会涨吗？</div>
+          <div class="card-insight">跟踪江苏上市券商国联证券的股价异动，分析连续涨停背后的市场逻辑与估值风险。</div>
+        </div>
+
+        <div class="work-card compact">
+          <div class="card-meta"><span>2020</span><span class="card-cat">金融监管</span></div>
+          <div class="card-title">起底苏交科内幕交易案：三名发起人股东参与，被罚没 420 万</div>
+          <div class="card-insight">深度调查类报道，梳理苏交科内幕交易案的利益链条与处罚结果。被新华报业网转载。</div>
+        </div>
+
+        <div class="work-card compact">
+          <div class="card-meta"><span>2020</span><span class="card-cat">金融监管</span></div>
+          <div class="card-title">东方证券「好员工」：内幕在手还是亏，还给东家「无偿」打工</div>
+          <div class="card-insight">以鲜活叙事切入金融从业人员内幕交易案件，将枯燥的监管处罚写出故事感与警示意义。</div>
+        </div>
+
+        <div class="work-card compact">
+          <div class="card-meta"><span>2020</span><span class="card-cat">金融报道</span></div>
+          <div class="card-title">疫情之下生意火爆，江苏租赁上半年赚嗨了，人均创利或达 400 万</div>
+          <div class="card-insight">从疫情特殊时期的业绩切入，分析金融租赁行业的结构性机会与风险。</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     Column 5: 冰川私享号 · 政策评论
+     ═══════════════════════════════════════ -->
+    <div class="column-section" id="col-bc">
+      <div class="column-header">
+        <div class="col-timeline">2025</div>
+        <h3>冰川私享号 · 政策评论</h3>
+        <div class="col-role">独立供稿</div>
+        <div class="col-desc">
+          社会保障与公共政策评论，从具体政策落地的制度性障碍切入，讨论深层治理问题。
+        </div>
+      </div>
+      <div class="works-grid">
+
+        <div class="work-card compact">
+          <div class="card-meta"><span>2025</span><span class="card-cat">政策评论</span></div>
+          <div class="card-title">每月 800 元养老消费券，不该只是躺在账户里</div>
+          <div class="card-insight">从养老消费券使用困境切入，讨论社会保障政策落地的制度性障碍——政策初衷与实际执行之间的鸿沟。</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+     Column 6: 南财百舸 · 人物特写
+     ═══════════════════════════════════════ -->
+    <div class="column-section" id="col-nc">
+      <div class="column-header">
+        <div class="col-timeline">2021 — 2023</div>
+        <h3>南财百舸 · 人物特写 & 学术随笔</h3>
+        <div class="col-role">南京财经大学 · 校园媒体</div>
+        <div class="col-desc">
+          学术人物特写与校园文化报道，以文学化笔法呈现学者的精神世界，展示叙事能力与人文视野。
+        </div>
+      </div>
+      <div class="works-grid">
+
+        <div class="work-card compact">
+          <div class="card-meta"><span>2022</span><span class="card-cat">人物特写</span></div>
+          <div class="card-title">顾学宁：一簇人间烟火，三分道骨仙风</div>
+          <div class="card-insight">学术人物特写，以文学化笔法呈现经济学学者的人文学养与精神世界。展示深度人物采访与叙事能力。</div>
+        </div>
+
+        <div class="work-card compact">
+          <div class="card-meta"><span>2022</span><span class="card-cat">校园文化</span></div>
+          <div class="card-title">围炉｜南财世锦赛最佳辩手：真诚和套路究竟怎么选</div>
+          <div class="card-insight">校园人物访谈，以辩论话题切入成长叙事，呈现当代大学生的价值选择与思考。</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-text">&copy; 2026 孙澍垚</span>
+    <span><a href="mailto:cloudyssy@163.com">cloudyssy@163.com</a></span>
+  </div>
+</footer>
+
+<script>
+  // ── 吴晓波频道 sub-filters ──
+  const filterBtns = document.querySelectorAll('.sub-filter-btn');
+  const wxbCards = document.querySelectorAll('#wxbGrid .work-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+
+      wxbCards.forEach(card => {
+        if (filter === 'all' || card.dataset.cat === filter) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+  // ── Expand/Collapse cards (吴晓波频道 only) ──
+  document.getElementById('wxbGrid').addEventListener('click', (e) => {
+    const card = e.target.closest('.work-card.expandable');
+    if (!card) return;
+
+    if (card.classList.contains('expanded')) {
+      card.classList.remove('expanded');
+      return;
+    }
+
+    // Collapse any other expanded card
+    document.querySelectorAll('.work-card.expanded').forEach(c => c.classList.remove('expanded'));
+
+    card.classList.add('expanded');
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+</script>
+
+</body>
+</html>
