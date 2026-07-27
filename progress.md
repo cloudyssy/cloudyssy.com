@@ -22,5 +22,6 @@
 ## 简历 & 作品
 - [x] 作品驱动简历 — `materials/resume.html`（浏览器打开可直接打印 PDF）
 - [x] 个人作品网站 — `materials/portfolio.html`（作品展示 + 领域筛选 + 展开阅读）
+- [x] 个人作品网站 — [www.cloudyssy.com](http://www.cloudyssy.com) 已上线
 - [ ] 视频作品（远川方向待补充）
 - [ ] 深度长稿（待投稿/发表）

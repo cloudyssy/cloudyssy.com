@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>作品详情 · 孙澍垚</title>
+<style>
+  :root {
+    --bg: #FBF9F5;
+    --fg: #1A1A1A;
+    --muted: #6B6B6B;
+    --accent: #C5513B;
+    --hairline: #E8E5DF;
+    --card-bg: #FFFFFF;
+    --font-sans: system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --font-serif: "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", Georgia, serif;
+    --max-width: 720px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.75;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(251, 249, 245, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--hairline);
+  }
+  nav .nav-inner {
+    max-width: 960px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 24px;
+  }
+  nav .nav-name { font-weight: 600; font-size: 15px; letter-spacing: 0.03em; }
+  nav .nav-links { display: flex; gap: 28px; }
+  nav .nav-links a {
+    text-decoration: none; color: var(--muted); font-size: 13px;
+    transition: color 0.2s;
+  }
+  nav .nav-links a:hover { color: var(--fg); }
+
+  /* ── Article ── */
+  .article { max-width: var(--max-width); margin: 0 auto; padding: 140px 24px 80px; }
+
+  .back-link {
+    display: inline-block; font-size: 13px; color: var(--muted);
+    text-decoration: none; margin-bottom: 32px; transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--fg); }
+
+  .art-platform {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+    color: var(--accent); margin-bottom: 8px;
+  }
+  .art-date { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .art-title {
+    font-size: 28px; font-weight: 700; line-height: 1.35;
+    margin-bottom: 12px;
+  }
+  .art-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
+  .art-tags span {
+    font-size: 11px; font-weight: 500; color: var(--muted);
+    border: 0.5px solid var(--hairline); padding: 3px 10px; border-radius: 3px;
+  }
+
+  /* ── Content blocks ── */
+  .content-block { margin-bottom: 36px; }
+  .content-block h3 {
+    font-size: 14px; font-weight: 600; letter-spacing: 0.05em;
+    color: var(--accent); margin-bottom: 12px;
+    padding-bottom: 8px; border-bottom: 0.5px solid var(--hairline);
+  }
+  .content-block p {
+    font-size: 16px; line-height: 1.9; margin-bottom: 16px;
+    font-family: var(--font-serif);
+  }
+  .content-block blockquote {
+    margin: 16px 0; padding: 16px 20px;
+    border-left: 2px solid var(--accent);
+    background: rgba(197, 81, 59, 0.03);
+    font-size: 14px; color: var(--muted); line-height: 1.7;
+  }
+  .content-block .source-link {
+    font-size: 13px; color: var(--muted);
+  }
+  .content-block .source-link a {
+    color: var(--accent); text-decoration: none;
+  }
+  .content-block .source-link a:hover { text-decoration: underline; }
+
+  /* ── Divider between news and commentary ── */
+  .section-divider {
+    width: 40px; height: 1px; background: var(--accent);
+    margin: 36px 0; opacity: 0.4;
+  }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 0.5px solid var(--hairline); padding: 40px 0; margin-top: 40px;
+  }
+  footer .footer-inner {
+    max-width: var(--max-width); margin: 0 auto; padding: 0 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer .footer-text { font-size: 13px; color: var(--muted); }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 640px) {
+    .article { padding: 120px 16px 60px; }
+    .art-title { font-size: 22px; }
+    nav .nav-links { gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-name">孙澍垚</div>
+    <div class="nav-links">
+      <a href="index.html">作品</a>
+      <a href="resume.html">简历</a>
+    </div>
+  </div>
+</nav>
+
+<article class="article" id="articleContent">
+  <!-- Filled by JS -->
+</article>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-text">&copy; 2026 孙澍垚</span>
+    <span><a href="mailto:cloudyssy@163.com">cloudyssy@163.com</a></span>
+  </div>
+</footer>
+
+<script src="articles-data.js"></script>
+<script>
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    const article = ARTICLES[id];
+
+    if (!article) {
+      document.getElementById('articleContent').innerHTML = '<p style="color:var(--muted);text-align:center;padding:60px 0;">文章未找到 · <a href="index.html">返回作品集</a></p>';
+      document.title = '未找到 · 孙澍垚';
+      return;
+    }
+
+    document.title = article.title + ' · 孙澍垚';
+
+    let html = '';
+
+    // Back link
+    html += '<a href="index.html" class="back-link">← 作品集</a>';
+
+    // Metadata
+    html += '<div class="art-platform">' + escapeHtml(article.platform) + '</div>';
+    html += '<div class="art-date">' + escapeHtml(article.date) + '</div>';
+    html += '<h1 class="art-title">' + escapeHtml(article.title) + '</h1>';
+
+    // Tags
+    if (article.tags && article.tags.length) {
+      html += '<div class="art-tags">';
+      article.tags.forEach(t => { html += '<span>' + escapeHtml(t) + '</span>'; });
+      html += '</div>';
+    }
+
+    // Editor's note
+    if (article.editorNote) {
+      html += '<div class="content-block"><blockquote>' + escapeHtml(article.editorNote) + '</blockquote></div>';
+    }
+
+    // News summary
+    if (article.news) {
+      html += '<div class="content-block"><h3>新闻背景</h3>';
+      const paragraphs = article.news.split('\n\n');
+      paragraphs.forEach(p => {
+        const trimmed = p.trim();
+        if (trimmed) html += '<p>' + escapeHtml(trimmed) + '</p>';
+      });
+      html += '</div>';
+    }
+
+    // Source link
+    if (article.sourceUrl) {
+      html += '<div class="content-block"><div class="source-link">新闻来源：<a href="' + escapeHtml(article.sourceUrl) + '" target="_blank" rel="noopener">' + escapeHtml(article.sourceLabel || article.sourceUrl) + '</a></div></div>';
+    }
+
+    // Divider
+    if ((article.news || article.sourceUrl) && article.commentary) {
+      html += '<div class="section-divider"></div>';
+    }
+
+    // Commentary
+    if (article.commentary) {
+      html += '<div class="content-block"><h3>点评</h3>';
+      const cParagraphs = article.commentary.split('\n\n');
+      cParagraphs.forEach(p => {
+        const trimmed = p.trim();
+        if (trimmed) html += '<p>' + escapeHtml(trimmed) + '</p>';
+      });
+      html += '</div>';
+    }
+
+    // Full body for non-吴晓波频道 formats
+    if (article.body) {
+      html += '<div class="content-block">';
+      const bParagraphs = article.body.split('\n\n');
+      bParagraphs.forEach(p => {
+        const trimmed = p.trim();
+        if (trimmed) html += '<p>' + escapeHtml(trimmed) + '</p>';
+      });
+      html += '</div>';
+    }
+
+    document.getElementById('articleContent').innerHTML = html;
+  })();
+
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+</script>
+
+</body>
+</html>

@@ -145,6 +145,11 @@
   }
   .work-card .card-title { font-size: 15px; font-weight: 600; line-height: 1.45; margin-bottom: 8px; }
   .work-card .card-insight { font-size: 13px; color: var(--muted); line-height: 1.65; flex: 1; }
+  .work-card .card-link {
+    display: inline-block; margin-top: 12px; font-size: 12px; font-weight: 500;
+    color: var(--accent); text-decoration: none; transition: color 0.2s;
+  }
+  .work-card .card-link:hover { color: var(--accent-dim); }
 
   /* ── Compact Card (for non-吴晓波频道 works) ── */
   .work-card.compact { cursor: default; }
@@ -724,17 +729,104 @@
 </footer>
 
 <script>
+  // ── Article ID mapping (title → article-id) ──
+  var ARTICLE_MAP = {
+    // 吴晓波频道
+    "Anthropic 呼吁全球暂停 AI 开发，但它的论据站得住脚吗？": "wxb-ai-anthropic-pause",
+    "中国 AI 大模型调用量连续六周超美国：榜单背后的深层博弈": "wxb-ai-call-volume",
+    "字节跳动 CEO 时隔四年再发全员信：大模型时代的组织逻辑": "wxb-ai-bytedance-letter",
+    "微信灰测接入 DeepSeek：王炸组合的想象空间与落地现实": "wxb-ai-wechat-deepseek",
+    "OpenAI 发布最具「情商」的 GPT-4.5，但定价比竞品贵千倍": "wxb-ai-gpt45",
+    "OpenAI 发布首款 AI Agent 产品：从聊天到执行的关键一跃": "wxb-ai-agent",
+    "蔡崇信称已看到 AI 数据中心泡沫苗头": "wxb-ai-datacenter-bubble",
+    "英伟达市值突破 5 万亿美元：AI 资本内循环的双刃剑": "wxb-chip-nvidia-5t",
+    "台积电千亿美元赴美：关税博弈下的生存算术": "wxb-chip-tsmc-us",
+    "三星、海力士加入存储芯片涨价潮：AI 如何重塑芯片价格周期": "wxb-chip-memory-price",
+    "比亚迪将高阶智驾打入 7 万元区间：技术下沉的双重效应": "wxb-auto-byd",
+    "L3 自动驾驶新国标公示：法律责任重新分配的制度时刻": "wxb-auto-l3",
+    "宇树科技机器人算法升级：从跳舞自由到商业化落地还有多远": "wxb-robot-ushu",
+    "杭州为机器人立法：产业政策需要专业力量参与": "wxb-robot-hangzhou-law",
+    "苹果 Q4 中国出货量跌 25%：创新匮乏是比销量更严峻的问题": "wxb-consumer-apple-q4",
+    "苹果首款折叠屏 iPhone Fold：迟到者的技术溢价与物理极限": "wxb-consumer-iphone-fold",
+    "Meta 计划限制员工 Token 使用量：AI 军备赛的组织行为学": "wxb-consumer-meta-token",
+    "马斯克宣布 SpaceX 收购 xAI：太空算力中心的终极蓝图": "wxb-space-spacex-xai",
+    "SpaceX 星舰第五飞：站在失败的肩膀上，筷子夹住火箭": "wxb-space-starship",
+    "谷歌科学家连续两年斩获诺贝尔奖：AI 与基础科学的交叉叙事": "wxb-space-nobel",
+    // 李稻葵
+    "AI 超额红利 应当如何分配": "lkq-ai-dividend",
+    "机器人税 要不要征": "lkq-robot-tax",
+    "演唱会被紧急叫停 上亿损失谁该反思": "lkq-concert-cancel",
+    "2028 智能危机 真的会来吗？": "lkq-2028-crisis",
+    "社保新规 有啥影响": "lkq-social-security",
+    "存钱养老毫无意义？马斯克预言怎么看": "lkq-musk-pension",
+    "中国经济「半年报」数据背后有何隐忧": "lkq-economy-halfyear",
+    "祝贺张雪机车夺冠 该为摩托产业松绑了": "lkq-motorcycle",
+    // 楠哥有才气
+    "深挖蜜雪冰城发家史": "nan-mixue",
+    "科技巨头争相砸钱中国高校？": "nan-tech-china-uni",
+    // 江苏金融观察
+    "「逆天」12 连板后，国联证券还会涨吗？": "jsjr-guolian",
+    "起底苏交科内幕交易案：三名发起人股东参与，被罚没 420 万": "jsjr-sujiaoke",
+    "东方证券「好员工」：内幕在手还是亏，还给东家「无偿」打工": "jsjr-dongfang",
+    "疫情之下生意火爆，江苏租赁上半年赚嗨了，人均创利或达 400 万": "jsjr-jiangsu-leasing",
+    // 冰川私享号
+    "每月 800 元养老消费券，不该只是躺在账户里": "bc-pension",
+    // 南财百舸
+    "顾学宁：一簇人间烟火，三分道骨仙风": "nc-gu",
+    "围炉｜南财世锦赛最佳辩手：真诚和套路究竟怎么选": "nc-debate"
+  };
+
+  function getArticleId(card) {
+    var titleEl = card.querySelector('.card-title');
+    if (!titleEl) return null;
+    var title = titleEl.textContent.trim();
+    return ARTICLE_MAP[title] || null;
+  }
+
+  // ── Add "阅读全文 →" links to expandable card details ──
+  document.querySelectorAll('.work-card.expandable').forEach(function(card) {
+    var aid = getArticleId(card);
+    if (!aid) return;
+    var detail = card.querySelector('.card-detail');
+    if (!detail) return;
+    var link = document.createElement('a');
+    link.className = 'card-link';
+    link.href = 'article.html?id=' + aid;
+    link.textContent = '阅读全文 →';
+    detail.appendChild(link);
+  });
+
+  // ── Compact cards: click to navigate ──
+  document.querySelectorAll('.work-card.compact').forEach(function(card) {
+    var aid = getArticleId(card);
+    if (!aid) return;
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', function(e) {
+      // Don't navigate if user is selecting text
+      if (window.getSelection().toString()) return;
+      location.href = 'article.html?id=' + aid;
+    });
+    // Add subtle indicator
+    var insight = card.querySelector('.card-insight');
+    if (insight) {
+      var link = document.createElement('span');
+      link.className = 'card-link';
+      link.textContent = '阅读全文 →';
+      card.appendChild(link);
+    }
+  });
+
   // ── 吴晓波频道 sub-filters ──
-  const filterBtns = document.querySelectorAll('.sub-filter-btn');
-  const wxbCards = document.querySelectorAll('#wxbGrid .work-card');
+  var filterBtns = document.querySelectorAll('.sub-filter-btn');
+  var wxbCards = document.querySelectorAll('#wxbGrid .work-card');
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
+  filterBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      filterBtns.forEach(function(b) { b.classList.remove('active'); });
       btn.classList.add('active');
-      const filter = btn.dataset.filter;
+      var filter = btn.dataset.filter;
 
-      wxbCards.forEach(card => {
+      wxbCards.forEach(function(card) {
         if (filter === 'all' || card.dataset.cat === filter) {
           card.classList.remove('hidden');
         } else {
@@ -745,8 +837,11 @@
   });
 
   // ── Expand/Collapse cards (吴晓波频道 only) ──
-  document.getElementById('wxbGrid').addEventListener('click', (e) => {
-    const card = e.target.closest('.work-card.expandable');
+  document.getElementById('wxbGrid').addEventListener('click', function(e) {
+    // Don't expand if clicking the "阅读全文" link
+    if (e.target.closest('.card-link')) return;
+
+    var card = e.target.closest('.work-card.expandable');
     if (!card) return;
 
     if (card.classList.contains('expanded')) {
@@ -754,8 +849,7 @@
       return;
     }
 
-    // Collapse any other expanded card
-    document.querySelectorAll('.work-card.expanded').forEach(c => c.classList.remove('expanded'));
+    document.querySelectorAll('.work-card.expanded').forEach(function(c) { c.classList.remove('expanded'); });
 
     card.classList.add('expanded');
     card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
