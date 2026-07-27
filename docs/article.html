@@ -97,6 +97,21 @@
   }
   .content-block .source-link a:hover { text-decoration: underline; }
 
+  /* ── Video script metadata ── */
+  .art-meta-row {
+    margin-bottom: 28px; padding: 16px 20px;
+    background: rgba(0,0,0,0.02); border-radius: 4px;
+    border: 0.5px solid var(--hairline);
+  }
+  .art-meta-row .meta-item {
+    font-size: 13px; line-height: 1.7; color: var(--muted);
+  }
+  .art-meta-row .meta-item + .meta-item { margin-top: 8px; }
+  .art-meta-row .meta-label {
+    font-weight: 600; font-size: 11px; letter-spacing: 0.05em;
+    color: var(--accent); margin-right: 6px;
+  }
+
   /* ── Divider between news and commentary ── */
   .section-divider {
     width: 40px; height: 1px; background: var(--accent);
@@ -216,11 +231,59 @@
 
     // Full body for non-吴晓波频道 formats
     if (article.body) {
+      var bodyText = article.body;
+      var metaHtml = '';
+      var displayBody = bodyText;
+
+      // Parse 封面标题/发布文案/核心观点 from body
+      var coverTitle = '', publishCopy = '', corePoint = '';
+
+      var ctMatch = bodyText.match(/^封面标题[：:]\s*(.+?)(?:\n|\\n)/);
+      if (ctMatch) { coverTitle = ctMatch[1].trim(); }
+
+      var pcMatch = bodyText.match(/发布文案[：:]\s*(.+?)(?:\n|\\n)/);
+      if (pcMatch) { publishCopy = pcMatch[1].trim(); }
+
+      // 核心观点前置 (in brackets)
+      var cpMatch = bodyText.match(/【核心观点[^】]*】\s*([\s\S]*?)(?=建议角度[：:]|参考观点[：:]|\n\n\d+[、.]|\n\n首先)/);
+      if (!cpMatch) cpMatch = bodyText.match(/【核心观点[^】]*】\s*(.+?)(?=\\n\\n)/);
+      if (cpMatch) { corePoint = cpMatch[1].trim(); }
+
+      if (coverTitle || publishCopy || corePoint) {
+        metaHtml += '<div class="art-meta-row">';
+        if (coverTitle) {
+          metaHtml += '<div class="meta-item"><span class="meta-label">封面标题</span>' + escapeHtml(coverTitle) + '</div>';
+        }
+        if (publishCopy) {
+          metaHtml += '<div class="meta-item"><span class="meta-label">发布文案</span>' + escapeHtml(publishCopy) + '</div>';
+        }
+        if (corePoint) {
+          metaHtml += '<div class="meta-item"><span class="meta-label">核心观点</span>' + escapeHtml(corePoint) + '</div>';
+        }
+        metaHtml += '</div>';
+
+        // Remove metadata from body text
+        displayBody = bodyText
+          .replace(/^封面标题[：:].+\n?/, '')
+          .replace(/^发布文案[：:].+\n?/, '')
+          .replace(/【核心观点[^】]*】[\s\S]*?(?=建议角度[：:]|参考观点[：:]|\n\n\d+[、.]|\n\n首先)/, '')
+          .replace(/^\n+/, '');
+      }
+
+      html += metaHtml;
+
+      // Render remaining body text
       html += '<div class="content-block">';
-      const bParagraphs = article.body.split('\n\n');
-      bParagraphs.forEach(p => {
-        const trimmed = p.trim();
-        if (trimmed) html += '<p>' + escapeHtml(trimmed) + '</p>';
+      var bParagraphs = displayBody.split('\\n\\n');
+      // Also handle actual newlines
+      if (bParagraphs.length <= 1) bParagraphs = displayBody.split('\n\n');
+      bParagraphs.forEach(function(p) {
+        var trimmed = p.trim();
+        if (!trimmed) return;
+        // Escape HTML, then convert \n to <br>
+        var escaped = escapeHtml(trimmed);
+        escaped = escaped.replace(/\\n/g, '<br>');
+        html += '<p>' + escaped + '</p>';
       });
       html += '</div>';
     }
