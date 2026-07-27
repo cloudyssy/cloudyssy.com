@@ -282,50 +282,21 @@
 
       html += metaHtml;
 
-      // Render remaining body text
+      // Render remaining body text — body may contain pre-processed HTML
       html += '<div class="content-block">';
       var bParagraphs = displayBody.split('\\n\\n');
       if (bParagraphs.length <= 1) bParagraphs = displayBody.split('\n\n');
 
-      bParagraphs.forEach(function(p, idx) {
+      bParagraphs.forEach(function(p) {
         var trimmed = p.trim();
         if (!trimmed) return;
 
-        // Detect sub-headings: short standalone lines that look like titles
-        var isSubHeading = false;
-        var lines = trimmed.split(/\\n|\n/);
-        if (lines.length === 1 && lines[0].length < 80) {
-          var t = lines[0];
-          // Numbered: "01", "02", "一、", "第一步", "第一层"
-          if (/^\d{2,3}$/.test(t)) isSubHeading = true;
-          if (/^[一二三四五六七八九十]/.test(t)) isSubHeading = true;
-          if (/^第[一二三]/.test(t)) isSubHeading = true;
-          // Standalone short Chinese titles (not a full sentence)
-          if (t.length >= 3 && t.length <= 30 && !/[。！？；：]/.test(t) && !/^\d{4}[年]/.test(t)) isSubHeading = true;
-          // Lines that look like section headers: "01", "02", "三尺讲台为人师", etc.
-          if (/^\d{2}\s/.test(t)) isSubHeading = true;
-          // "---" style separators
-          if (/^--/.test(t)) isSubHeading = true;
-        }
-
-        // Detect intro paragraph: biographical info with dates and titles
-        var isIntro = false;
-        if (lines.length >= 1) {
-          var firstLine = lines[0];
-          if ((idx === 0 || idx === 1 || idx === 2) && firstLine.length > 60 &&
-            (/\(\d{4}[-—年]/.test(firstLine) || firstLine.indexOf('副教授') > -1 || firstLine.indexOf('讲师') > -1 || firstLine.indexOf('理事') > -1 || firstLine.indexOf('秘书长') > -1)) {
-            isIntro = true;
-          }
-        }
-
-        var escaped = escapeHtml(trimmed);
-        escaped = escaped.replace(/\\n/g, '<br>');
-
-        if (isSubHeading) {
-          html += '<span class="sub-heading">' + escaped + '</span>';
-        } else if (isIntro) {
-          html += '<div class="intro-text">' + escaped + '</div>';
+        // If paragraph already has HTML markup (from pre-processing), render directly
+        if (/<span class='sub-heading'>|<div class='intro-text'>/.test(trimmed)) {
+          html += trimmed.replace(/\\n/g, '<br>');
         } else {
+          var escaped = escapeHtml(trimmed);
+          escaped = escaped.replace(/\\n/g, '<br>');
           html += '<p>' + escaped + '</p>';
         }
       });
