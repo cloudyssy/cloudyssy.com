@@ -300,8 +300,8 @@
           if (/^\d{2,3}$/.test(t)) isSubHeading = true;
           if (/^[一二三四五六七八九十]/.test(t)) isSubHeading = true;
           if (/^第[一二三]/.test(t)) isSubHeading = true;
-          // Standalone short Chinese titles (not a full sentence ending with period)
-          if (t.length >= 3 && t.length <= 30 && !/[。！？，、；：""''（）]/.test(t)) isSubHeading = true;
+          // Standalone short Chinese titles (not a full sentence)
+          if (t.length >= 3 && t.length <= 30 && !/[。！？；：]/.test(t) && !/^\d{4}[年]/.test(t)) isSubHeading = true;
           // Lines that look like section headers: "01", "02", "三尺讲台为人师", etc.
           if (/^\d{2}\s/.test(t)) isSubHeading = true;
           // "---" style separators
