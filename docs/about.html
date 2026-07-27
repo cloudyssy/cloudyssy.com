@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>关于 · 孙澍垚</title>
+<style>
+  :root {
+    --bg: #FBF9F5;
+    --fg: #1A1A1A;
+    --muted: #6B6B6B;
+    --accent: #C5513B;
+    --hairline: #E8E5DF;
+    --card-bg: #FFFFFF;
+    --font-sans: system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --font-serif: "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", Georgia, serif;
+    --max-width: 720px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--fg);
+    font-family: var(--font-sans); -webkit-font-smoothing: antialiased; line-height: 1.75;
+  }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(251, 249, 245, 0.85);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--hairline);
+  }
+  nav .nav-inner {
+    max-width: 960px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center; padding: 16px 24px;
+  }
+  nav .nav-name { font-weight: 600; font-size: 15px; letter-spacing: 0.03em; }
+  nav .nav-links { display: flex; gap: 28px; }
+  nav .nav-links a { text-decoration: none; color: var(--muted); font-size: 13px; transition: color 0.2s; }
+  nav .nav-links a:hover, nav .nav-links a.active { color: var(--fg); }
+
+  .page { max-width: var(--max-width); margin: 0 auto; padding: 140px 24px 80px; }
+  .back-link { display: inline-block; font-size: 13px; color: var(--muted); text-decoration: none; margin-bottom: 40px; }
+  .back-link:hover { color: var(--fg); }
+
+  h1 { font-size: 36px; font-weight: 700; line-height: 1.25; margin-bottom: 32px; }
+  h2 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent); margin: 48px 0 16px; }
+  h2:first-of-type { margin-top: 0; }
+  p { font-size: 16px; line-height: 1.9; margin-bottom: 16px; font-family: var(--font-serif); }
+  .lead { font-size: 18px; color: var(--fg); font-family: var(--font-sans); font-weight: 500; }
+
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 32px 0; }
+  .stat { text-align: center; padding: 20px 12px; background: var(--card-bg); border: 0.5px solid var(--hairline); border-radius: 4px; }
+  .stat .val { font-size: 28px; font-weight: 700; font-family: var(--font-serif); }
+  .stat .lbl { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  .timeline { margin: 24px 0; }
+  .tl-item { display: flex; gap: 20px; padding: 16px 0; }
+  .tl-item + .tl-item { border-top: 0.5px solid var(--hairline); }
+  .tl-period { font-size: 12px; font-weight: 600; color: var(--accent); min-width: 110px; padding-top: 2px; }
+  .tl-content h4 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+  .tl-content .tl-sub { font-size: 13px; color: var(--muted); }
+
+  footer { border-top: 0.5px solid var(--hairline); padding: 40px 0; margin-top: 40px; }
+  footer .footer-inner { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+  footer .footer-text { font-size: 13px; color: var(--muted); }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 640px) {
+    .page { padding: 120px 16px 60px; }
+    h1 { font-size: 28px; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .tl-item { flex-direction: column; gap: 2px; }
+    nav .nav-links { gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-name">孙澍垚</div>
+    <div class="nav-links">
+      <a href="index.html">作品</a>
+      <a href="about.html" class="active">关于</a>
+      <a href="resume.html">简历</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+  <a href="index.html" class="back-link">← 作品集</a>
+
+  <h1>把财经方法论<br>带进科技报道</h1>
+
+  <p class="lead">金融专硕出身，从审计到财经记者，再到 AI 科技内容创作者。五年间写了 236 篇科技短评、50+ 条财经视频脚本。看科技，不看参数看商业模式，不写 PR 稿写判断。</p>
+
+  <div class="stats-row">
+    <div class="stat"><div class="val">236</div><div class="lbl">科技短评</div></div>
+    <div class="stat"><div class="val">50+</div><div class="lbl">视频脚本</div></div>
+    <div class="stat"><div class="val">100万+</div><div class="lbl">累计阅读</div></div>
+    <div class="stat"><div class="val">百万</div><div class="lbl">账号涨粉</div></div>
+  </div>
+
+  <h2>正在做的事</h2>
+  <p>在世见科技参与经济学专家账号「李稻葵」的内容共创，负责财经视频脚本策划与撰写，保持周更 3 条节奏，覆盖宏观经济、AI 与民生领域。负责期间账号涨粉近百万，2025 年涨粉 60 万，垂类赛道断层式领先。「钱的流转」精选课获年度知识科普奖，多条解读登上抖音、B站热搜。</p>
+  <p>同时运营个人账号「42号实验室」，用 Claude Code + DeepSeek 搭建半自动化写作工作流，探索 AI 辅助内容生产的工作方式。</p>
+
+  <h2>来路</h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-period">2025.05 — 至今</div>
+      <div class="tl-content">
+        <h4>世见科技 · 「李稻葵」内容策划</h4>
+        <div class="tl-sub">经济学专家账号内容共创主笔，财经视频脚本策划与撰写</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-period">2024.03 — 2026.06</div>
+      <div class="tl-content">
+        <h4>吴晓波频道 · 科技方向主笔</h4>
+        <div class="tl-sub">「财经日日评」交易日更新，236 篇科技短评，单篇最高 10 万+</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-period">2020.07 — 2021.03</div>
+      <div class="tl-content">
+        <h4>江苏金融观察 · 财经记者</h4>
+        <div class="tl-sub">上市公司报道与金融监管调查，多篇被新华报业网转载</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>工具箱</h2>
+  <p>中级会计职称 · 证券从业资格 · 基金从业资格 · 剑桥商务英语高级 · CET-6 607</p>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-text">&copy; 2026 孙澍垚</span>
+      <span><a href="mailto:cloudyssy@163.com">cloudyssy@163.com</a></span>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
