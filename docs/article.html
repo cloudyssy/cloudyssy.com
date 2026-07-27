@@ -291,20 +291,32 @@
         var trimmed = p.trim();
         if (!trimmed) return;
 
-        // Detect sub-headings: short lines, numbered sections, standalone bold titles
+        // Detect sub-headings: short standalone lines that look like titles
         var isSubHeading = false;
         var lines = trimmed.split(/\\n|\n/);
-        // Single short line that looks like a heading
-        if (lines.length === 1 && lines[0].length < 60) {
-          if (/^\d{2}$/.test(lines[0])) isSubHeading = true;           // "01", "02"
-          if (/^[一二三四五六七八九十]、/.test(lines[0])) isSubHeading = true; // "一、..."
-          if (/^第[一二三]步/.test(lines[0])) isSubHeading = true;      // "第一步..."
-          if (/^第[一二三][层面]/.test(lines[0])) isSubHeading = true;  // "第一层..."
+        if (lines.length === 1 && lines[0].length < 80) {
+          var t = lines[0];
+          // Numbered: "01", "02", "一、", "第一步", "第一层"
+          if (/^\d{2,3}$/.test(t)) isSubHeading = true;
+          if (/^[一二三四五六七八九十]/.test(t)) isSubHeading = true;
+          if (/^第[一二三]/.test(t)) isSubHeading = true;
+          // Standalone short Chinese titles (not a full sentence ending with period)
+          if (t.length >= 3 && t.length <= 30 && !/[。！？，、；：""''（）]/.test(t)) isSubHeading = true;
+          // Lines that look like section headers: "01", "02", "三尺讲台为人师", etc.
+          if (/^\d{2}\s/.test(t)) isSubHeading = true;
+          // "---" style separators
+          if (/^--/.test(t)) isSubHeading = true;
         }
 
-        // Detect intro paragraph: first paragraph with biographical info
-        var isIntro = (idx === 0 && lines[0].length > 100 &&
-          (/\(\d{4}[-—]/.test(lines[0]) || lines[0].indexOf('副教授') > -1 || lines[0].indexOf('讲师') > -1));
+        // Detect intro paragraph: biographical info with dates and titles
+        var isIntro = false;
+        if (lines.length >= 1) {
+          var firstLine = lines[0];
+          if ((idx === 0 || idx === 1 || idx === 2) && firstLine.length > 60 &&
+            (/\(\d{4}[-—年]/.test(firstLine) || firstLine.indexOf('副教授') > -1 || firstLine.indexOf('讲师') > -1 || firstLine.indexOf('理事') > -1 || firstLine.indexOf('秘书长') > -1)) {
+            isIntro = true;
+          }
+        }
 
         var escaped = escapeHtml(trimmed);
         escaped = escaped.replace(/\\n/g, '<br>');
