@@ -284,14 +284,14 @@
         }
         metaHtml += '</div>';
 
-        // Remove metadata from body text
+        // Remove metadata lines from body text (including trailing newline)
         displayBody = bodyText
-          .replace(/^封面标题[：:].+/, '')
-          .replace(/^标题[：:].+/, '')
-          .replace(/^发布文案[：:].+/, '')
-          .replace(/^文案[：:].+/, '')
+          .replace(/^封面标题[：:][^\\n]*(?:\\n)?/, '')
+          .replace(/^标题[：:][^\\n]*(?:\\n)?/, '')
+          .replace(/^发布文案[：:][^\\n]*(?:\\n)?/, '')
+          .replace(/^文案[：:][^\\n]*(?:\\n)?/, '')
           .replace(/【核心观点[^】]*】[\s\S]*?(?=建议角度[：:]|参考观点[：:]|\n\n\d+[、.]|\n\n首先)/, '')
-          .replace(/^[\n\\n]+/, '');
+          .replace(/^\\n+/, '');
       }
 
       html += metaHtml;
