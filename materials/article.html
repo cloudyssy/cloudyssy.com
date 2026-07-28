@@ -288,8 +288,10 @@
         displayBody = bodyText
           .replace(/^封面标题[：:][^\\n]*(?:\\n)?/, '')
           .replace(/^标题[：:][^\\n]*(?:\\n)?/, '')
+          .replace(/^[\\n\\xa0]+/, '')  // strip leading whitespace/newlines
           .replace(/^发布文案[：:][^\\n]*(?:\\n)?/, '')
           .replace(/^文案[：:][^\\n]*(?:\\n)?/, '')
+          .replace(/^[\\n\\xa0]+/, '')  // strip leading whitespace again
           .replace(/【核心观点[^】]*】[\s\S]*?(?=建议角度[：:]|参考观点[：:]|\n\n\d+[、.]|\n\n首先)/, '')
           .replace(/^\\n+/, '');
       }
