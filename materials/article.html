@@ -298,27 +298,9 @@
 
       html += metaHtml;
 
-      // Render remaining body text — body may contain pre-processed HTML
+      // Body is pre-rendered HTML — render directly
       html += '<div class="content-block">';
-      var bParagraphs = displayBody.split('\\n\\n');
-      if (bParagraphs.length <= 1) bParagraphs = displayBody.split('\n\n');
-      // For articles using single newlines (e.g. 楠哥), split on \n
-      if (bParagraphs.length <= 2) bParagraphs = displayBody.split('\\n');
-      if (bParagraphs.length <= 2) bParagraphs = displayBody.split('\n');
-
-      bParagraphs.forEach(function(p) {
-        var trimmed = p.trim();
-        if (!trimmed) return;
-
-        // If paragraph already has HTML markup (from pre-processing), render directly
-        if (/<span class='sub-heading'>|<div class='intro-text'>/.test(trimmed)) {
-          html += trimmed.replace(/\\n/g, '<br>');
-        } else {
-          var escaped = escapeHtml(trimmed);
-          escaped = escaped.replace(/\\n/g, '<br>');
-          html += '<p>' + escaped + '</p>';
-        }
-      });
+      html += displayBody.replace(/\\n/g, '\n');  // Convert \n escapes to real newlines for HTML
       html += '</div>';
     }
 
