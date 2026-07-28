@@ -245,14 +245,26 @@
       var metaHtml = '';
       var displayBody = bodyText;
 
-      // Parse 封面标题/发布文案/核心观点 from body
+      // Parse 封面标题/标题/发布文案/文案/核心观点 from body
       var coverTitle = '', publishCopy = '', corePoint = '';
+      var metaLabel1 = '封面标题', metaLabel2 = '发布文案';
 
+      // 李稻葵 format: 封面标题：XXX, 发布文案：XXX
       var ctMatch = bodyText.match(/^封面标题[：:]\s*(.+?)(?:\n|\\n)/);
       if (ctMatch) { coverTitle = ctMatch[1].trim(); }
 
       var pcMatch = bodyText.match(/发布文案[：:]\s*(.+?)(?:\n|\\n)/);
       if (pcMatch) { publishCopy = pcMatch[1].trim(); }
+
+      // 楠哥 format: 标题：XXX, 文案：XXX (or 发布文案：XXX)
+      if (!coverTitle) {
+        var tMatch = bodyText.match(/^标题[：:]\s*(.+?)(?:\n|\\n)/);
+        if (tMatch) { coverTitle = tMatch[1].trim(); metaLabel1 = '标题'; }
+      }
+      if (!publishCopy) {
+        var pmMatch = bodyText.match(/^文案[：:]\s*(.+?)(?:\n|\\n)/);
+        if (pmMatch) { publishCopy = pmMatch[1].trim(); metaLabel2 = '文案'; }
+      }
 
       // 核心观点前置 (in brackets)
       var cpMatch = bodyText.match(/【核心观点[^】]*】\s*([\s\S]*?)(?=建议角度[：:]|参考观点[：:]|\n\n\d+[、.]|\n\n首先)/);
@@ -262,10 +274,10 @@
       if (coverTitle || publishCopy || corePoint) {
         metaHtml += '<div class="art-meta-row">';
         if (coverTitle) {
-          metaHtml += '<div class="meta-item"><span class="meta-label">封面标题</span>' + escapeHtml(coverTitle) + '</div>';
+          metaHtml += '<div class="meta-item"><span class="meta-label">' + escapeHtml(metaLabel1) + '</span>' + escapeHtml(coverTitle) + '</div>';
         }
         if (publishCopy) {
-          metaHtml += '<div class="meta-item"><span class="meta-label">发布文案</span>' + escapeHtml(publishCopy) + '</div>';
+          metaHtml += '<div class="meta-item"><span class="meta-label">' + escapeHtml(metaLabel2) + '</span>' + escapeHtml(publishCopy) + '</div>';
         }
         if (corePoint) {
           metaHtml += '<div class="meta-item"><span class="meta-label">核心观点</span>' + escapeHtml(corePoint) + '</div>';
@@ -274,10 +286,12 @@
 
         // Remove metadata from body text
         displayBody = bodyText
-          .replace(/^封面标题[：:].+\n?/, '')
-          .replace(/^发布文案[：:].+\n?/, '')
+          .replace(/^封面标题[：:].+/, '')
+          .replace(/^标题[：:].+/, '')
+          .replace(/^发布文案[：:].+/, '')
+          .replace(/^文案[：:].+/, '')
           .replace(/【核心观点[^】]*】[\s\S]*?(?=建议角度[：:]|参考观点[：:]|\n\n\d+[、.]|\n\n首先)/, '')
-          .replace(/^\n+/, '');
+          .replace(/^[\n\\n]+/, '');
       }
 
       html += metaHtml;
@@ -286,6 +300,9 @@
       html += '<div class="content-block">';
       var bParagraphs = displayBody.split('\\n\\n');
       if (bParagraphs.length <= 1) bParagraphs = displayBody.split('\n\n');
+      // For articles using single newlines (e.g. 楠哥), split on \n
+      if (bParagraphs.length <= 2) bParagraphs = displayBody.split('\\n');
+      if (bParagraphs.length <= 2) bParagraphs = displayBody.split('\n');
 
       bParagraphs.forEach(function(p) {
         var trimmed = p.trim();
