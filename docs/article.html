@@ -144,6 +144,15 @@
     .art-title { font-size: 22px; }
     nav .nav-links { gap: 16px; }
   }
+  .content-block figure { margin: 28px 0; }
+  .content-block img { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 4px; }
+  .content-block figcaption { color: var(--muted); font-size: 12px; text-align: center; margin-top: 10px; }
+  .content-block h2 { font-size: 22px; margin: 48px 0 20px; scroll-margin-top: 90px; }
+  .article-toc { padding: 20px 24px; border: 1px solid var(--hairline); margin-bottom: 36px; font-size: 14px; }
+  .article-toc ol { padding-left: 20px; margin-top: 8px; }
+  .article-toc a { color: var(--muted); text-decoration: none; }
+  .article-toc a:hover { color: var(--accent); }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 </style>
 </head>
 <body>
@@ -192,7 +201,7 @@
 
     // Metadata
     html += '<div class="art-platform">' + escapeHtml(article.platform) + '</div>';
-    html += '<div class="art-date">' + escapeHtml(article.date) + '</div>';
+    if (article.date || article.dateNote) html += '<div class="art-date">' + escapeHtml([article.date, article.dateNote].filter(Boolean).join(' · ')) + '</div>';
     html += '<h1 class="art-title">' + escapeHtml(article.title) + '</h1>';
 
     // Tags
@@ -205,6 +214,14 @@
     // Editor's note
     if (article.editorNote) {
       html += '<div class="content-block"><blockquote>' + escapeHtml(article.editorNote) + '</blockquote></div>';
+    }
+
+    if (article.sections && article.sections.length) {
+      html += '<div class="article-toc" aria-label="文章目录"><strong>本文目录</strong><ol>';
+      article.sections.forEach(section => {
+        html += '<li><a href="#' + escapeHtml(section.id) + '">' + escapeHtml(section.title) + '</a></li>';
+      });
+      html += '</ol></div>';
     }
 
     // News summary
@@ -304,6 +321,7 @@
       html += '</div>';
     }
 
+    html += '<a href="works.html' + (id === 'lab42-ai-history' ? '#col-lab42' : '#works') + '" class="back-link">← 浏览全部作品</a>';
     document.getElementById('articleContent').innerHTML = html;
   })();
 
