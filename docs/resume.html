@@ -57,18 +57,6 @@
   .header .tagline { font-size: 14px; color: var(--muted); margin-top: 4px; }
   .header .contact { text-align: right; font-size: 12px; color: var(--muted); line-height: 1.8; }
 
-  /* ── Stats Row ── */
-  .stats {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
-    margin-bottom: 26px;
-  }
-  .stat-item {
-    text-align: center; padding: 12px 8px;
-    border: 1px solid var(--hairline); border-radius: 2px;
-  }
-  .stat-item .number { font-size: 28px; font-weight: 700; font-family: var(--font-serif); line-height: 1.2; }
-  .stat-item .label { font-size: 11px; color: var(--muted); margin-top: 2px; }
-
   /* ── Section ── */
   .section { margin-bottom: 22px; }
 
@@ -87,6 +75,9 @@
   .work-item .work-title { font-size: 13.5px; font-weight: 600; line-height: 1.5; }
   .work-item .work-insight { font-size: 12px; color: var(--muted); line-height: 1.65; margin-top: 2px; }
   .work-item .work-tags { font-size: 10px; color: var(--muted); margin-top: 3px; }
+
+  .work-title a { color: inherit; text-decoration: none; }
+  .work-title a:hover, .work-title a:focus-visible { color: var(--accent); text-decoration: underline; }
 
   /* ── Experience ── */
   .exp-item { margin-bottom: 12px; }
@@ -136,22 +127,6 @@
     </div>
   </div>
 
-  <!-- Writing Stats -->
-  <div class="stats">
-    <div class="stat-item">
-      <div class="number">200+</div>
-      <div class="label">科技短评 · 2020–2025</div>
-    </div>
-    <div class="stat-item">
-      <div class="number">100 万+</div>
-      <div class="label">累计阅读量</div>
-    </div>
-    <div class="stat-item">
-      <div class="number">20 万+</div>
-      <div class="label">视频最高点赞</div>
-    </div>
-  </div>
-
   <!-- Profile -->
   <div class="section">
     <h2>个人简介</h2>
@@ -163,64 +138,40 @@
   <!-- Selected Works -->
   <div class="section">
     <h2>代表作品</h2>
-
-    <!-- 视频作品 -->
-    <div class="works-category">
-      <div class="cat-label">视频</div>
-
-      <div class="work-item">
-        <div class="work-meta">「李稻葵」抖音</div>
-        <div class="work-title">持续讨论 AI 是否有泡沫？AI 时代如何分配？</div>
-        <div class="work-insight">保持周更节奏，覆盖宏观经济、民生领域热点议题，以经济学视角切入 AI 话题，兼顾专业深度与大众传播。</div>
-        <div class="work-tags">#财经视频 #AI 话题</div>
-      </div>
-
-      <div class="work-item">
-        <div class="work-meta">「李稻葵」抖音 · 上线后点赞破万后被下架</div>
-        <div class="work-title">《演唱会被紧急叫停，上亿损失谁该反思》</div>
-        <div class="work-insight">从一场演唱会被叫停的事件切入，梳理背后多方利益关联与制度反思，引发广泛讨论。</div>
-        <div class="work-tags">#热点评论 #事件分析</div>
-      </div>
-
-      <div class="work-item">
-        <div class="work-meta">「楠哥有才气」</div>
-        <div class="work-title">《深挖蜜雪冰城发家史》《科技巨头争相砸钱中国高校？》</div>
-        <div class="work-insight">商业分析类视频脚本，将企业成长史与产业趋势结合，以通俗叙事解释复杂商业逻辑。</div>
-        <div class="work-tags">#商业分析 #叙事脚本</div>
-      </div>
+    <div class="work-item">
+      <div class="work-meta">42号实验室 · AI 科普</div>
+      <div class="work-title"><a href="article.html?id=lab42-ai-history">AI浮沉60年｜谁创造了会思考的科学怪物？</a></div>
+      <div class="work-insight">用 5 幅动图解释神经网络与感知机局限，将技术史写成有起伏的人物故事。</div>
     </div>
 
-    <!-- 文章作品 -->
-    <div class="works-category">
-      <div class="cat-label">文章</div>
+    <div class="work-item">
+      <div class="work-meta">李稻葵 · 财经视频脚本</div>
+      <div class="work-title"><a href="article.html?id=lkq-concert-cancel">演唱会被紧急叫停 上亿损失谁该反思</a></div>
+      <div class="work-insight">从演唱会临时叫停切入，追问审批协同、监管前置与损失分担，将热点事件转化为政府与市场关系的分析。</div>
+    </div>
 
-      <div class="work-item">
-        <div class="work-meta">吴晓波频道</div>
-        <div class="work-title">交易日科技短评 · 200+ 篇</div>
-        <div class="work-insight">追踪 AI 大模型、芯片半导体、自动驾驶等前沿科技领域当日热点，撰写独立短评。单篇最高阅读量 10 万+。</div>
-        <div class="work-tags">#科技评论 #产业追踪</div>
-      </div>
+    <div class="work-item">
+      <div class="work-meta">李稻葵 · 财经视频脚本</div>
+      <div class="work-title"><a href="article.html?id=lkq-musk-pension">存钱养老毫无意义？马斯克预言怎么看</a></div>
+      <div class="work-insight">从马斯克“存钱养老无意义”的预言切入，分析 AI 时代的就业冲击、财富分配与相对需求，回应普通人的未来焦虑。</div>
+    </div>
 
-      <div class="work-item">
-        <div class="work-meta">冰川私享号</div>
-        <div class="work-title">《每月 800 元养老消费券，不该只是躺在账户里》</div>
-        <div class="work-insight">从养老消费券使用困境切入，讨论社会保障政策落地的制度性障碍。</div>
-        <div class="work-tags">#社会保障 #政策评论</div>
-      </div>
+    <div class="work-item">
+      <div class="work-meta">冰川私享号 · 政策评论</div>
+      <div class="work-title"><a href="article.html?id=bc-pension">每月 800 元养老消费券，不该只是躺在账户里</a></div>
+      <div class="work-insight">从为家中老人申领养老消费券的亲身经历出发，分析补贴使用门槛与服务供给，讨论政策如何真正惠及家庭。</div>
+    </div>
 
-      <div class="work-item">
-        <div class="work-meta">江苏金融观察</div>
-        <div class="work-title">《"逆天"12 连板后，国联证券还会涨吗？》《起底苏交科内幕交易案：三名发起人股东参与，被罚没 420 万》</div>
-        <div class="work-insight">跟踪江苏上市金融机构动态，撰写资本市场分析稿件与金融监管调查报道，多篇被新华报业网转载。</div>
-        <div class="work-tags">#资本市场 #金融监管</div>
-      </div>
+    <div class="work-item">
+      <div class="work-meta">江苏金融观察 · 财经报道</div>
+      <div class="work-title"><a href="article.html?id=jsjr-sujiaoke">起底苏交科内幕交易案：三名发起人股东参与，被罚没 420 万</a></div>
+      <div class="work-insight">沿公司收购与监管处罚的线索梳理内幕交易，让案件中的人物、利益关系和时间线清晰可读。</div>
+    </div>
 
-      <div class="work-item">
-        <div class="work-meta">南财百舸</div>
-        <div class="work-title">《人物 | 顾学宁：一簇人间烟火，三分道骨仙风》</div>
-        <div class="work-insight">学术人物特写，以文学化笔法呈现经济学学者的人文学养与精神世界。</div>
-        <div class="work-tags">#人物特写 #学术随笔</div>
-      </div>
+    <div class="work-item">
+      <div class="work-meta">南财百舸 · 人物特写</div>
+      <div class="work-title"><a href="article.html?id=nc-gu">顾学宁：一簇人间烟火，三分道骨仙风</a></div>
+      <div class="work-insight">以人物细节与文学化笔法，呈现经济学学者的日常气质、人文学养与精神世界。</div>
     </div>
   </div>
 
